@@ -9,8 +9,8 @@ Import-Module ActiveDirectory
 
 ## 주요 변수 설정 
 $dcpath="DC=vclass,DC=local"
-$ou="Student"
-$groupname="Students"
+$ou="Phoenix"
+$groupname="phoenix"
 $oupath="OU=" + $ou + "," + $dcpath
 
 ## OU 만들기 
@@ -26,7 +26,7 @@ New-ADGroup -Name $groupname -GroupCategory Security -GroupScope Global -Display
 $count=0..10 #배열 변수 0~10
 foreach ($i in $count)
 { 
-  $username="S" + "{0:d2}" -f $i #10진법으로 2자리=00, 01, 02 ...
+  $username="PHX" + "{0:d2}" -f $i #10진법으로 2자리=00, 01, 02 ...
   New-AdUser -Name $username -Path $oupath -Enabled $True -AccountPassword (ConvertTo-SecureString "VMware1!" -AsPlainText -force) -passThru  -PasswordNeverExpires 1  
 	#-PasswordNeverExpires 1 : 계정 만료 안시킴!
   Add-ADGroupMember -Identity $groupname -Members $username
