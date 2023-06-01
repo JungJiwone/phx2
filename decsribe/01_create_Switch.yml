@@ -36,7 +36,7 @@
         vlan_id: 4095 #vlan id, 모든 vlan id를 알고있는 vlan포트
       delegate_to: localhost
 
-    - name: Adding Site A Management Portgroup #vlan 10 포트 그룹 생성
+    - name: Adding PHX Management Portgroup #vlan 20 포트 그룹 생성
       community.vmware.vmware_portgroup:
         hostname: "{{ vcenter_hostname }}"
         username: "{{ vcenter_username }}"
@@ -44,11 +44,11 @@
         esxi_hostname: "{{ esxi_hostname }}"
         validate_certs: no
         switch: "{{ student_ID }}"
-        portgroup: "{{ student_ID + '-SA-Mgmt' }}"
-        vlan_id: 10
+        portgroup: "{{ student_ID + '-PHX-Mgmt' }}"
+        vlan_id: 20
       delegate_to: localhost
 
-    - name: Adding Site A Storage Portgroup #vlan 11 포트 그룹 생성
+    - name: Adding PHX Storage Portgroup #vlan 30 포트 그룹 생성
       community.vmware.vmware_portgroup:
         hostname: "{{ vcenter_hostname }}"
         username: "{{ vcenter_username }}"
@@ -56,11 +56,11 @@
         esxi_hostname: "{{ esxi_hostname }}"
         validate_certs: no
         switch: "{{ student_ID }}"
-        portgroup: "{{ student_ID + '-SA-Storage' }}"
-        vlan_id: 11
+        portgroup: "{{ student_ID + '-PHX-Storage' }}"
+        vlan_id: 30
       delegate_to: localhost
 
-    - name: Adding Site A vMotion Portgroup #vlan 12 포트 그룹 생성
+    - name: Adding PHX vMotion Portgroup #vlan 40 포트 그룹 생성
       community.vmware.vmware_portgroup:
         hostname: "{{ vcenter_hostname }}"
         username: "{{ vcenter_username }}"
@@ -68,11 +68,11 @@
         esxi_hostname: "{{ esxi_hostname }}"
         validate_certs: no
         switch: "{{ student_ID }}"
-        portgroup: "{{ student_ID + '-SA-vMotion' }}"
-        vlan_id: 12
+        portgroup: "{{ student_ID + '-PHX-vMotion' }}"
+        vlan_id: 40
       delegate_to: localhost
 
-    - name: Adding Site A Production Portgroup #vlan 13 포트 그룹 생성
+    - name: Adding PHX Production Portgroup #vlan 50 포트 그룹 생성
       community.vmware.vmware_portgroup:
         hostname: "{{ vcenter_hostname }}"
         username: "{{ vcenter_username }}"
@@ -80,6 +80,6 @@
         esxi_hostname: "{{ esxi_hostname }}"
         validate_certs: no
         switch: "{{ student_ID }}"
-        portgroup: "{{ student_ID + '-SA-Prod' }}"
-        vlan_id: 13
+        portgroup: "{{ student_ID + '-PHX-Prod' }}"
+        vlan_id: 50
       delegate_to: localhost
