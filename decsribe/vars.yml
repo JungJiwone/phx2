@@ -1,0 +1,39 @@
+#./vars.yaml
+ansible_python_interpreter: /bin/python3 #어떤 파이썬 해석기를 사용할지
+
+student_ID: "S11" #내 ID(S11)
+
+vcenter_hostname: "200.200.200.251"  #바깥단의 vcenter에 일을 시킬 것 = Base_vCenter 이를 통해서 api통신을 함
+# = vcsa.vclass.kh
+vcenter_username: "S11@vclass.kh" #251에 접근할 때 사용할 id
+vcenter_password: "VMware1!"
+
+datacenter_name: "Datacenter"
+
+folder_prefix: "Datacenter/vm/3.Students/"
+
+# S01, S06, S11, S16, S21 --> esxi_host : 200.200.200.246
+# S02, S07, S12, S17, S22 --> esxi_host : 200.200.200.247
+# S03, S08, S13, S18, S23 --> esxi_host : 200.200.200.248
+# S04, S09, S14, S19, S24 --> esxi_host : 200.200.200.249
+# S00, S05, S10, S15, S20 --> esxi_host : 200.200.200.250
+
+esxi_hostname: "200.200.200.246" #나의 물리서버(이거 또한 가상 서버이긴함(esxi))
+esxi_password: "VMware1!"
+esxi_username: "root"
+
+public_net: "VM-200.200.200.x" #public 네트워크 대역의 변수
+private_net: "{{ student_ID + '-Trunk' }}" #내 스위치의 트렁크 포트의 이름
+
+datastore_name: "Local-01" #저장소 명
+
+
+dc_template_name: "Temp-WinSvr2022-ESXi-05"
+dc_snapshot_src_name: "KH4"
+
+esxi_template_name: "Temp-ESXi-05"
+
+sa_esxi_template_name: "Temp-SA-ESXi-05"
+
+vcsa_template_name: "Temp-VCSA-ESXi-05"
+vcsa_snapshot_src_name: "Installed"
