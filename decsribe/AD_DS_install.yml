@@ -1,0 +1,65 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_vm_shell_module.html#ansible-collections-community-vmware-vmware-vm-shell-module 
+
+---
+- hosts: localhost
+  vars_files: ./vars.yaml
+
+  tasks: 
+    - name: Install_WindowsFeatures_AD-DS
+      community.vmware.vmware_vm_shell:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: "{{ student_ID + '-DC' }}" #찾아갈 곳, 가상머신 이름으로 찾아감
+        vm_id_type: vm_name
+        vm_username: 'Administrator' #가상머신 내에서의 계정
+        vm_password: 'VMware1!'
+        vm_shell: 'c:\windows\system32\windowspowershell\v1.0\powershell.exe' #사용할 shell, cmd에서 where powershell로 위치를 찾을 수 있음
+        vm_shell_args: '-command "(Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools)"' #powershell에 해당 명령어 실행, AD-Domain-Servieces 를 추가해라
+        vm_shell_cwd: 'c:\Users\Administrator'  # 작업 위치
+        wait_for_process: True
+        timeout: 180
+      delegate_to: localhost
+      register: shell_command_with_wait_timeout
+
+    - name: Import_Module_ADDSDeployment
+      community.vmware.vmware_vm_shell:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: "{{ student_ID + '-DC' }}"
+        vm_id_type: vm_name
+        vm_username: 'Administrator'
+        vm_password: 'VMware1!'
+        vm_shell: 'c:\windows\system32\windowspowershell\v1.0\powershell.exe'
+        vm_shell_args: '-command "Import-Module ADDSDeployment"' # ADDSDeployment에 대한 powershell 모드를 설치
+        vm_shell_cwd: 'c:\Users\Administrator'
+        wait_for_process: True
+        timeout: 180
+      delegate_to: localhost
+      register: shell_command_with_wait_timeout
+
+
+    - name: Install_First_ADDSForest #루트 포레스트 설치 작업
+      community.vmware.vmware_vm_shell:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: "{{ student_ID + '-DC' }}"
+        vm_id_type: vm_name
+        vm_username: 'Administrator'
+        vm_password: 'VMware1!'
+        vm_shell: 'c:\windows\system32\windowspowershell\v1.0\powershell.exe'
+        vm_shell_args: '-command "(Install-ADDSForest -CreateDnsDelegation:$false -DatabasePath C:\Windows\NTDS -DomainMode WinThreshold -DomainName vclass.local -DomainNetbiosName VCLASS -ForestMode WinThreshold -InstallDns:$true -LogPath C:\Windows\NTDS -NoRebootOnCompletion:$false -SysvolPath C:\Windows\SYSVOL -Force:$true -SafeModeAdministratorPassword (ConvertTo-SecureString -AsPlainText "VMware1!" -force)")"'
+				#-CreateDnsDelegation : 위임받지 않고 내가 첫번째 도메인이다
+				#-DomainMode WinThreshold : 최상위값 쓸 것
+				#-SafeModeAdministratorPassword (ConvertTo-SecureString -AsPlainText "VMware1!" -force) : 복구 모드 패스워드 설정, 이게 없으면 파워쉘이 진행을 안함
+        vm_shell_cwd: 'c:\Users\Administrator'
+        wait_for_process: True
+        timeout: 180
+      delegate_to: localhost
+      register: shell_command_with_wait_timeout
+      ignore_errors: yes # 에러 무시, 리부팅이 이뤄지니까 에러가 발생하므로 에러 무시해라
