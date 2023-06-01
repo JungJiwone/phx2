@@ -1,0 +1,71 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_vm_shell_module.html#ansible-collections-community-vmware-vmware-vm-shell-module
+
+---
+- hosts: localhost
+
+  vars_files: ./vars.yaml
+
+  tasks: #작업은 한 개
+    - name: VyOS Router Configuration # 작업 이름, vyos 라우터 설정
+      community.vmware.vmware_vm_shell: # 모듈 이름
+        hostname: '{{ vcenter_hostname }}' #vcenter에 내 계정을 가지고 접근
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: 'false' # 접근할 때 인증서는 무시
+        datacenter: '{{ datacenter_name }}' # 누가 시키는가 = 나의 vcenter
+        folder: '{{ folder_prefix + student_ID }}' # 어떤 폴더에서 작업할 것인가
+        vm_id: "{{ student_ID + '-Router' }}" # vm을 구별하는 방법을 vm 이름으로
+        vm_id_type: vm_name 
+        vm_username: 'vyos'
+        vm_password: 'vyos'
+        vm_shell: /bin/vbash # shell을 이용해서 다음 작업을 수행할 것
+        vm_shell_cwd: "/tmp" # shell을 할 때 작업 위치, 임시 디렉터리
+        vm_shell_args: |- # 밑의 내용을 변수 값으로 받아서 수행할 것
+          -c "source /opt/vyatta/etc/functions/script-template # 이 위치의 소스를 사용해서 밑의 내용을 수행하겠 이 스크립트에 내용 추가할 것
+          configure # vyos configure 모드 진입
+          set system login user admin full-name Admin_User #system에 로그인할 수 있는 사용자 생성 admin, full-name도 지정
+          set system login user admin authentication plaintext-password VMware1! # admin 사용자의 비밀번호 설정
+          set service ssh port 22 # ssh 서비스 허용
+          set system ipv6 disable # ipv6 사용X
+          
+          set interfaces ethernet eth0 address dhcp # eth0 인터페이스는 dhcp 클라이언트로
+          set interfaces ethernet eth0 description Outside # eth0 설명
+          set interfaces ethernet eth0 ipv6 address no-default-link-local # IPv6 호스트나 라우터가 자동으로 생성하는 링크 로컬 주소 중에서 기본 주소를 사용하지 않겠다
+          set protocols static route 0.0.0.0/0 next-hop 200.200.200.254
+
+          set system name-server 200.200.200.245
+          set system ntp server kr.pool.ntp.org
+					#=> set service ntp server kr.pool.ntp.org
+       
+          set interfaces ethernet eth1 vif 10 description 'VLAN 10 - Site A Management'
+          set interfaces ethernet eth1 vif 10 address 10.10.10.1/24
+          set interfaces ethernet eth1 vif 10 ipv6 address no-default-link-local
+          
+          set interfaces ethernet eth1 vif 11 description 'VLAN 11 - Site A Storage'
+          set interfaces ethernet eth1 vif 11 address 10.10.11.1/24
+          set interfaces ethernet eth1 vif 11 ipv6 address no-default-link-local
+
+          set interfaces ethernet eth1 vif 12 description 'VLAN 12 - Site A vMotion'
+          set interfaces ethernet eth1 vif 12 address 10.10.12.1/24
+          set interfaces ethernet eth1 vif 12 ipv6 address no-default-link-local
+          
+          set interfaces ethernet eth1 vif 13 description 'VLAN 13 - Site A Production'
+          set interfaces ethernet eth1 vif 13 address 10.10.13.1/24
+          set interfaces ethernet eth1 vif 13 ipv6 address no-default-link-local
+                        
+          set nat source rule 10 outbound-interface eth0
+          set nat source rule 10 source address 10.10.10.0/24
+          set nat source rule 10 translation address masquerade
+
+          set nat source rule 13 outbound-interface eth0
+          set nat source rule 13 source address 10.10.13.0/24
+          set nat source rule 13 translation address masquerade
+
+          commit
+          save"
+        wait_for_process: True
+        timeout: 180 # shell이 동작하는 것을 3분정도 기다리겠습니다 3분 넘으면 실패
+      delegate_to: localhost
+      register: shell_command_with_wait_timeout # 이 결과값을 여기에 등록
+
+#=> reboot하면 날라감 = reboot 하면 cdrom을 읽어서 부팅하기 때문!
