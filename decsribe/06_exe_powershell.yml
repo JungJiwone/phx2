@@ -16,8 +16,8 @@
         vm_username: 'Administrator'
         vm_password: 'VMware1!'
         copy:
-            src: "/mnt/c/Material/06-Add_dns_record.ps1"
-            dest: "c:\\Material\\06-Add_dns_record.ps1"
+            src: "/mnt/c/Material/07_add_rr.ps1"
+            dest: "c:\\Material\\07_add_rr.ps1"
             overwrite: true
       delegate_to: localhost
 
@@ -33,7 +33,7 @@
         vm_username: 'Administrator'
         vm_password: 'VMware1!'
         vm_shell: 'c:\windows\system32\windowspowershell\v1.0\powershell.exe'
-        vm_shell_args: '-command "(c:\Material\06-Add_dns_record.ps1)"' # powershell sript 실행해라
+        vm_shell_args: '-command "(c:\Material\07_add_rr.ps1)"' # powershell sript 실행해라
         vm_shell_cwd: 'c:\Users\Administrator' #가상 머신(VM)에서 실행되는 셸(Shell)의 현재 작업 디렉토리(Working Directory)를 나타내는 변수
         wait_for_process: True
         timeout: 60
@@ -50,7 +50,7 @@
         vm_username: 'Administrator'
         vm_password: 'VMware1!'
         vm_shell: 'c:\windows\system32\windowspowershell\v1.0\powershell.exe'
-        vm_shell_args: '-command "(Remove-Item -path c:\Material\06-Add_dns_record.ps1)"'
+        vm_shell_args: '-command "(Remove-Item -path c:\Material\07_add_rr.ps1)"'
         vm_shell_cwd: 'c:\Users\Administrator'
         wait_for_process: True
       delegate_to: localhost
