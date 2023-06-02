@@ -32,9 +32,9 @@
           set interfaces ethernet eth0 description Outside # eth0 설명
           set interfaces ethernet eth0 ipv6 address no-default-link-local # IPv6 호스트나 라우터가 자동으로 생성하는 링크 로컬 주소 중에서 기본 주소를 사용하지 않겠다
           set protocols static route 0.0.0.0/0 next-hop 200.200.200.254
-
+	  
           set system name-server 200.200.200.245
-          set service ntp server kr.pool.ntp.org
+          set service ntp server kr.pool.ntp.or
 	  
           set interfaces ethernet eth1 vif 20 description 'VLAN 20 - PHX Management'
           set interfaces ethernet eth1 vif 20 address 20.20.20.1/24
@@ -43,7 +43,7 @@
           set interfaces ethernet eth1 vif 30 description 'VLAN 30 - PHX Storage'
           set interfaces ethernet eth1 vif 30 address 20.20.30.1/24
           set interfaces ethernet eth1 vif 30 ipv6 address no-default-link-local
-
+	  
           set interfaces ethernet eth1 vif 40 description 'VLAN 40 - PHX vMotion'
           set interfaces ethernet eth1 vif 40 address 20.20.40.1/24
           set interfaces ethernet eth1 vif 40 ipv6 address no-default-link-local
@@ -51,7 +51,7 @@
           set interfaces ethernet eth1 vif 50 description 'VLAN 50 - PHX Production'
           set interfaces ethernet eth1 vif 50 address 20.20.50.1/24
           set interfaces ethernet eth1 vif 50 ipv6 address no-default-link-local
-                        
+
           set nat source rule 20 outbound-interface eth0
           set nat source rule 20 source address 20.20.20.0/24
           set nat source rule 20 translation address masquerade
