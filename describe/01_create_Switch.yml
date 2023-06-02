@@ -2,8 +2,8 @@
 ## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_portgroup_module.html 
 
 ---
-- hosts: localhost   => sdk가 나한테 설치되었기 때문에 나 자신한테 돌린 것(hosts로 지정)
-  vars_files: ./vars.yaml => (계속 사용할)변수 목록이 저장된 파일
+- hosts: localhost   # sdk가 나한테 설치되었기 때문에 나 자신한테 돌린 것(hosts로 지정)
+  vars_files: ./vars.yaml # (계속 사용할)변수 목록이 저장된 파일
 
   tasks: 
     - name: Create Lab Standard Switch #스위치 만드는 작업
