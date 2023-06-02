@@ -32,10 +32,10 @@
           set interfaces ethernet eth0 description Outside
           set interfaces ethernet eth0 ipv6 address no-default-link-local
           set protocols static route 0.0.0.0/0 next-hop 200.200.200.254
-
+          
           set system name-server 200.200.200.245
           set service ntp server kr.pool.ntp.org
-       
+          
           set interfaces ethernet eth1 vif 10 description 'VLAN 10 - Site A Management'
           set interfaces ethernet eth1 vif 10 address 10.10.10.1/24
           set interfaces ethernet eth1 vif 10 ipv6 address no-default-link-local
@@ -43,7 +43,7 @@
           set interfaces ethernet eth1 vif 11 description 'VLAN 11 - Site A Storage'
           set interfaces ethernet eth1 vif 11 address 10.10.11.1/24
           set interfaces ethernet eth1 vif 11 ipv6 address no-default-link-local
-
+          
           set interfaces ethernet eth1 vif 12 description 'VLAN 12 - Site A vMotion'
           set interfaces ethernet eth1 vif 12 address 10.10.12.1/24
           set interfaces ethernet eth1 vif 12 ipv6 address no-default-link-local
@@ -51,15 +51,15 @@
           set interfaces ethernet eth1 vif 13 description 'VLAN 13 - Site A Production'
           set interfaces ethernet eth1 vif 13 address 10.10.13.1/24
           set interfaces ethernet eth1 vif 13 ipv6 address no-default-link-local
-                        
+          
           set nat source rule 10 outbound-interface eth0
           set nat source rule 10 source address 10.10.10.0/24
           set nat source rule 10 translation address masquerade
-
+           
           set nat source rule 13 outbound-interface eth0
           set nat source rule 13 source address 10.10.13.0/24
           set nat source rule 13 translation address masquerade
-
+           
           commit
           save"
         wait_for_process: True
