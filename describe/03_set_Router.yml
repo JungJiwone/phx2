@@ -3,7 +3,7 @@
 ---
 - hosts: localhost
 
-  vars_files: ./vars.yaml
+  vars_files: ./vars.yml
 
   tasks: #작업은 한 개
     - name: VyOS Router Configuration # 작업 이름, vyos 라우터 설정
