@@ -2,7 +2,7 @@
 
 ---
 - hosts: localhost
-  vars_files: ./vars.yaml
+  vars_files: ./vars.yml
 #누구한테 누가 무엇을 시키는가
   tasks:  # 무엇을
     - name: Create Router VM  # 가상 머신 생성
