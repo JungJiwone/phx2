@@ -51,7 +51,7 @@
           type: thin
           datastore: '{{ datastore_name }}'          
         networks:
-        - name: "{{ student_ID + '-SA-Storage' }}" #S11-SA-Storage 포트 그룹에 연결
+        - name: "{{ student_ID + '-PHX-Storage' }}" #S11-SA-Storage 포트 그룹에 연결
           device_type: vmxnet3
         cdrom:
         - controller_number: 0
