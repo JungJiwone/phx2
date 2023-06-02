@@ -2,7 +2,7 @@
 
 ---
 - hosts: localhost
-  vars_files: ./vars.yaml
+  vars_files: ./vars.yml
 
   tasks: 
     - name: Copy powershell script to VM # 가상 머신에 powershell script를 복사, task로 하나씩 등록하기 번잡하므로!
