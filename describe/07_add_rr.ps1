@@ -1,7 +1,7 @@
-# 정방향 조회 도메인 만들기 => 이미 만들어져있음
+# 정방향 조회 도메인 만들기 => 이미 만들어져있음 
 # Add-DnsServerPrimaryZone -Name "vclass.local" -ZoneFile "vclass.local.dns" 
 
-# 역방향 조회 도메인 만들기  => 주석에서 한글 사용 시 끝에 공백 추가하기!!!
+# 역방향 조회 도메인 만들기  => 주석에서 한글 사용 시 끝에 공백 추가하기!!! 
 Add-DnsServerPrimaryZone -NetworkID 20.20.20.0/24 -ZoneFile "20.20.20.in-addr.arpa.dns"
 
 # DNS 포워딩 
