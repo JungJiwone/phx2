@@ -8,7 +8,7 @@
 Import-Module ActiveDirectory
 
 ## 주요 변수 설정 
-$dcpath="DC=vclass,DC=local"
+$dcpath="DC=vclass,DC=phoenix"
 $ou="Phoenix"
 $groupname="phoenix"
 $oupath="OU=" + $ou + "," + $dcpath
