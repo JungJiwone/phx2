@@ -8,14 +8,14 @@ Add-DnsServerPrimaryZone -NetworkID 20.20.20.0/24 -ZoneFile "20.20.20.in-addr.ar
 # Add-DnsServerForwarder -IPAddress 200.200.200.245 -PassThru
 
 # Domain Controller Record
-Add-DnsServerResourceRecordA -Name "PHX-vcsa" -ZoneName "vclass.local" -IPv4Address "20.20.20.20"
-Add-DnsServerResourceRecordPtr -Name "20" -ZoneName "20.20.20.in-addr.arpa" -PtrDomainName "PHX-vcsa.phoenix.ad"
+Add-DnsServerResourceRecordA -Name "PHX-vcsa" -ZoneName "vclass.phoenix" -IPv4Address "20.20.20.20"
+Add-DnsServerResourceRecordPtr -Name "20" -ZoneName "20.20.20.in-addr.arpa" -PtrDomainName "PHX-vcsa.vclass.phoenix"
 
-Add-DnsServerResourceRecordA -Name "PHX-esxi-01" -ZoneName "vclass.local" -IPv4Address "20.20.20.11"
-Add-DnsServerResourceRecordPtr -Name "11" -ZoneName "20.20.20.in-addr.arpa" -PtrDomainName "PHX-esxi-01.phoenix.ad"
+Add-DnsServerResourceRecordA -Name "PHX-esxi-01" -ZoneName "vclass.phoenix" -IPv4Address "20.20.20.11"
+Add-DnsServerResourceRecordPtr -Name "11" -ZoneName "20.20.20.in-addr.arpa" -PtrDomainName "PHX-esxi-01.vclass.phoenix"
 
-Add-DnsServerResourceRecordA -Name "PHX-esxi-02" -ZoneName "vclass.local" -IPv4Address "20.20.20.12"
-Add-DnsServerResourceRecordPtr -Name "12" -ZoneName "20.20.20.in-addr.arpa" -PtrDomainName "PHX-esxi-02.phoenix.ad"
+Add-DnsServerResourceRecordA -Name "PHX-esxi-02" -ZoneName "vclass.phoenix" -IPv4Address "20.20.20.12"
+Add-DnsServerResourceRecordPtr -Name "12" -ZoneName "20.20.20.in-addr.arpa" -PtrDomainName "PHX-esxi-02.vclass.phoenix"
 
-Add-DnsServerResourceRecordA -Name "PHX-esxi-03" -ZoneName "vclass.local" -IPv4Address "20.20.20.13"
-Add-DnsServerResourceRecordPtr -Name "13" -ZoneName "20.20.20.in-addr.arpa" -PtrDomainName "PHX-esxi-03.phoenix.ad"
+Add-DnsServerResourceRecordA -Name "PHX-esxi-03" -ZoneName "vclass.phoenix" -IPv4Address "20.20.20.13"
+Add-DnsServerResourceRecordPtr -Name "13" -ZoneName "20.20.20.in-addr.arpa" -PtrDomainName "PHX-esxi-03.vclass.phoenix"
