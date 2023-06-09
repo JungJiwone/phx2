@@ -53,7 +53,7 @@
         vm_username: 'Administrator'
         vm_password: 'VMware1!'
         vm_shell: 'c:\windows\system32\windowspowershell\v1.0\powershell.exe'
-        vm_shell_args: '-command "(Install-ADDSForest -CreateDnsDelegation:$false -DatabasePath C:\Windows\NTDS -DomainMode WinThreshold -DomainName phoenix.ad -DomainNetbiosName PHOENIX -ForestMode WinThreshold -InstallDns:$true -LogPath C:\Windows\NTDS -NoRebootOnCompletion:$false -SysvolPath C:\Windows\SYSVOL -Force:$true -SafeModeAdministratorPassword (ConvertTo-SecureString -AsPlainText "VMware1!" -force)")"'
+        vm_shell_args: '-command "(Install-ADDSForest -CreateDnsDelegation:$false -DatabasePath C:\Windows\NTDS -DomainMode WinThreshold -DomainName vclass.phoenix -DomainNetbiosName PHOENIX -ForestMode WinThreshold -InstallDns:$true -LogPath C:\Windows\NTDS -NoRebootOnCompletion:$false -SysvolPath C:\Windows\SYSVOL -Force:$true -SafeModeAdministratorPassword (ConvertTo-SecureString -AsPlainText "VMware1!" -force)")"'
 				#-CreateDnsDelegation : 위임받지 않고 내가 첫번째 도메인이다
 				#-DomainMode WinThreshold : 최상위값 쓸 것
 				#-SafeModeAdministratorPassword (ConvertTo-SecureString -AsPlainText "VMware1!" -force) : 복구 모드 패스워드 설정, 이게 없으면 파워쉘이 진행을 안함
