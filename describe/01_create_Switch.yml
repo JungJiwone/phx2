@@ -44,7 +44,7 @@
         esxi_hostname: "{{ esxi_hostname }}"
         validate_certs: no
         switch: "{{ student_ID }}"
-        portgroup: "{{ student_ID + '-PHX-Mgmt' }}"
+        portgroup: "{{ student_ID + '-Mgmt' }}"
         vlan_id: 20
       delegate_to: localhost
 
@@ -56,7 +56,7 @@
         esxi_hostname: "{{ esxi_hostname }}"
         validate_certs: no
         switch: "{{ student_ID }}"
-        portgroup: "{{ student_ID + '-PHX-Storage' }}"
+        portgroup: "{{ student_ID + '-Storage' }}"
         vlan_id: 30
       delegate_to: localhost
 
@@ -68,7 +68,7 @@
         esxi_hostname: "{{ esxi_hostname }}"
         validate_certs: no
         switch: "{{ student_ID }}"
-        portgroup: "{{ student_ID + '-PHX-vMotion' }}"
+        portgroup: "{{ student_ID + '-vMotion' }}"
         vlan_id: 40
       delegate_to: localhost
 
@@ -80,6 +80,6 @@
         esxi_hostname: "{{ esxi_hostname }}"
         validate_certs: no
         switch: "{{ student_ID }}"
-        portgroup: "{{ student_ID + '-PHX-Prod' }}"
+        portgroup: "{{ student_ID + '-Prod' }}"
         vlan_id: 50
       delegate_to: localhost
