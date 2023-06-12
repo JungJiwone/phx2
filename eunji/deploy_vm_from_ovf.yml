@@ -35,7 +35,7 @@
       state: present
     with_items:
     - {label: "Network apdapter 1",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
-    - {label: "Network apdapter 1",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
-    - {label: "Network apdapter 1",network_name: "{{ student_ID + '-Trunk' }}" }
-    - {label: "Network apdapter 1",network_name: "{{ student_ID + '-Trunk' }}" }
+    - {label: "Network apdapter 2",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    - {label: "Network apdapter 3",network_name: "{{ student_ID + '-Trunk' }}" }
+    - {label: "Network apdapter 4",network_name: "{{ student_ID + '-Trunk' }}" }
     delegate_to: localhost
