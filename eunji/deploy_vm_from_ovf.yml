@@ -23,19 +23,19 @@
       wait_for_ip_address: true
     delegate_to: localhost
 
-  # - name: Configure network adapter
-  #   community.vmware.vmware_guest_network:
-  #     hostname: "{{ vcenter_hostname }}"
-  #     username: "{{ vcenter_username }}"
-  #     password: "{{ vcenter_password }}"
-  #     validate_certs: False
-  #     name: test_vm
-  #     label: '{{ item.label }}'
-  #     network_name: '{{ item.network_name }}'
-  #     state: present
-  #   with_items:
-  #   - {label: "Network apdapter 1",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
-  #   - {label: "Network apdapter 2",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
-  #   - {label: "Network apdapter 3",network_name: "{{ student_ID + '-Trunk' }}" }
-  #   - {label: "Network apdapter 4",network_name: "{{ student_ID + '-Trunk' }}" }
-  #   delegate_to: localhost
+  - name: Configure network adapter
+    community.vmware.vmware_guest_network:
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      validate_certs: False
+      name: test_vm
+      label: '{{ item.label }}'
+      network_name: '{{ item.network_name }}'
+      state: present
+    with_items:
+    - {label: "Network adapter 1",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    - {label: "Network adapter 2",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    - {label: "Network adapter 3",network_name: "{{ student_ID + '-Trunk' }}" }
+    - {label: "Network adapter 4",network_name: "{{ student_ID + '-Trunk' }}" }
+    delegate_to: localhost
