@@ -21,6 +21,12 @@
       networks: 
         name: S11-SA-Mgmt
         type: standard
+        name: S11-SA-Mgmt
+        type: standard
+        name: S11-Trunk
+        type: standard
+        name: S11-Trunk
+        type: standard
       power_on: false
       ovf: /mnt/c/test/S11-SA-ESXi-04/S11-SA-ESXi-04.ovf
       #wait_for_ip_address: true
