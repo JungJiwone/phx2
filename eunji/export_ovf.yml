@@ -13,5 +13,5 @@
       validate_certs: no
       name: "{{ student_ID + '-SA-ESXi-04' }}"
       export_with_images: true
-      export_dir: /home/ansible
+      export_dir: /mnt/c/test
     delegate_to: localhost
