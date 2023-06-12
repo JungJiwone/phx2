@@ -1,0 +1,22 @@
+vcenter_hostname: "10.10.10.10"
+
+vcenter_username: "administrator@vsphere.local"
+
+vcenter_password: "VMware1!"
+
+datacenter_name: "KH"
+
+dvswitch_name: "dSwitch"
+
+dvswitch_num_ports: 38
+
+portgroup_name: "DPG_"
+
+teaming_policy:
+
+active_uplinks:
+  - "uplink2"
+  - "uplink3"
+
+esxi_username: root
+esxi_password: VMware1!
