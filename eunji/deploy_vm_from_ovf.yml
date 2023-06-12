@@ -30,19 +30,13 @@
       password: "{{ vcenter_password }}"
       validate_certs: False
       name: test_VM
-      networks:
-      - name: network1
-        network_name: "{{ student_ID + '-SA-Mgmt' }}"
-        state: present
-      - name: network2
-        network_name: "{{ student_ID + '-SA-Mgmt' }}"
-        state: present
-      - name: network3
-        network_name: "{{ student_ID + '-Trunk' }}"
-        state: present
-      - name: network4
-        network_name: "{{ student_ID + '-Trunk' }}"
-        state: present
+      network_name: '{{ item.network_name }}'
+      state: present
+    with_items:
+    - {network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    - {network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    - {network_name: "{{ student_ID + '-Trunk' }}" }
+    - {network_name: "{{ student_ID + '-Trunk' }}" }
     delegate_to: localhost
 
 # - community.vmware.vmware_deploy_ovf:
