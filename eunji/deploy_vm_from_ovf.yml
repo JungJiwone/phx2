@@ -17,7 +17,7 @@
       esxi_hostname: "{{ esxi_hostname }}"
       datastore: '{{ datastore_name }}'
       name: test_vm      
-      #networks: "{u'S11-SA-Mgmt':u'{{ ProvisioningNetworkLabel }}'}"
+      networks: "{u'VM network':u'{{ S11-SA-Mgmt }}'}"
       power_on: false
       ovf: /mnt/c/test/S11-SA-ESXi-04/S11-SA-ESXi-04.ovf
       #wait_for_ip_address: true
