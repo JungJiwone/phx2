@@ -30,21 +30,12 @@
       password: "{{ vcenter_password }}"
       validate_certs: False
       name: test_vm
+      label: '{{ item.label }}'
       network_name: '{{ item.network_name }}'
       state: present
     with_items:
-    - {network_name: "{{ student_ID + '-SA-Mgmt' }}" }
-    - {network_name: "{{ student_ID + '-SA-Mgmt' }}" }
-    - {network_name: "{{ student_ID + '-Trunk' }}" }
-    - {network_name: "{{ student_ID + '-Trunk' }}" }
+    - {label: "Network apdapter 1",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    - {label: "Network apdapter 1",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    - {label: "Network apdapter 1",network_name: "{{ student_ID + '-Trunk' }}" }
+    - {label: "Network apdapter 1",network_name: "{{ student_ID + '-Trunk' }}" }
     delegate_to: localhost
-
-# - community.vmware.vmware_deploy_ovf:
-#     hostname: '{{ vcenter_hostname }}'
-#     username: '{{ vcenter_username }}'
-#     password: '{{ vcenter_password }}'
-#     datacenter: Datacenter1
-#     esxi_hostname: test-server
-#     datastore: test-datastore
-#     ovf: /path/to/ubuntu-16.04-amd64.ovf
-#   delegate_to: localhost
