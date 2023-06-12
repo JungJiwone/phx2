@@ -1,0 +1,30 @@
+#
+# AD DS 배포용 Windows PowerShell 스크립트
+#
+# ADDSDeployment 모듈을 가져옵니다. 이 모듈은 Active Directory 도메인 서비스 배포에 필요한 cmdlet을 제공합니다.
+#Install-ADDSForest: AD DS를 설치하고 새로운 도메인을 만듭니다.
+#-CreateDnsDelegation:$false: DNS 위임을 생성하지 않습니다.
+#-DatabasePath "C:\Windows\NTDS": 데이터베이스 파일의 경로를 지정합니다.
+#-DomainMode "WinThreshold": 도메인 모드를 "WinThreshold"로 설정합니다.
+#-DomainName "vclass.local": 도메인 이름을 "vclass.local"로 지정합니다.
+#-DomainNetbiosName "phx": 도메인 NetBIOS 이름을 "phx"로 지정합니다.
+#-ForestMode "WinThreshold": 포레스트 모드를 "WinThreshold"로 설정합니다.
+#-InstallDns:$true: DNS 서버를 함께 설치합니다.
+#-LogPath "C:\Windows\NTDS": 로그 파일의 경로를 지정합니다.
+#-NoRebootOnCompletion:$false: 설치 완료 후 자동 재부팅을 실행합니다.
+#-SysvolPath "C:\Windows\SYSVOL": Sysvol 폴더의 경로를 지정합니다.
+#-Force:$true: 경고나 확인 메시지 없이 강제로 작업을 실행합니다.
+
+Import-Module ADDSDeployment
+Install-ADDSForest `
+-CreateDnsDelegation:$false `
+-DatabasePath "C:\Windows\NTDS" `
+-DomainMode "WinThreshold" `
+-DomainName "vclass.local" `
+-DomainNetbiosName "phx" `
+-ForestMode "WinThreshold" `
+-InstallDns:$true `
+-LogPath "C:\Windows\NTDS" `
+-NoRebootOnCompletion:$false `
+-SysvolPath "C:\Windows\SYSVOL" `
+-Force:$true
