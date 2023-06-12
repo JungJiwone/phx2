@@ -13,11 +13,5 @@
       validate_certs: no
       name: "{{ student_ID + '-SA-ESXi-04' }}"
       export_with_images: true
-      export_dir: /path/to/ovf_template/
+      export_dir: /mnt/c/test
     delegate_to: localhost
-    
-  - name: Create export directory
-    file:
-      path: /path/to/ovf_template/
-      state: directory
-      mode: "0755"
