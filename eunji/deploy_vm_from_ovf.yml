@@ -24,26 +24,26 @@
     delegate_to: localhost
 
   - name: Configure network adapter
-      community.vmware.vmware_vm_network:
-        hostname: "{{ vcenter_hostname }}"
-        username: "{{ vcenter_username }}"
-        password: "{{ vcenter_password }}"
-        validate_certs: False
-        name: test_VM
-        networks:
-        - name: network1
-          network_name: "{{ student_ID + '-SA-Mgmt' }}"
-          power_state: poweredon
-        - name: network2
-          network_name: "{{ student_ID + '-SA-Mgmt' }}"
-          power_state: poweredon
-        - name: network1
-          network_name: "{{ student_ID + '-Trunk' }}"
-          power_state: poweredon
-        - name: network2
-          network_name: "{{ student_ID + '-Trunk' }}"
-          power_state: poweredon
-      delegate_to: localhost
+    community.vmware.vmware_vm_network:
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      validate_certs: False
+      name: test_VM
+      networks:
+      - name: network1
+        network_name: "{{ student_ID + '-SA-Mgmt' }}"
+        power_state: poweredon
+      - name: network2
+        network_name: "{{ student_ID + '-SA-Mgmt' }}"
+        power_state: poweredon
+      - name: network1
+        network_name: "{{ student_ID + '-Trunk' }}"
+        power_state: poweredon
+      - name: network2
+        network_name: "{{ student_ID + '-Trunk' }}"
+        power_state: poweredon
+    delegate_to: localhost
 
 # - community.vmware.vmware_deploy_ovf:
 #     hostname: '{{ vcenter_hostname }}'
