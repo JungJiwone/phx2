@@ -7,6 +7,8 @@ vcenter_username: "S00@vclass.kh"
 vcenter_password: "VMware1!"
 
 my_vcenter_hostname: "10.10.10.10"
+my_vcenter_username: "administartor@vsphere.local"
+my_vcenter_password: "VMware1!"
 
 datacenter_name: "Datacenter"
 
