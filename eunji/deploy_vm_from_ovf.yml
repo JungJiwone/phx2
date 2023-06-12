@@ -16,7 +16,7 @@
       folder: '{{ folder_prefix + student_ID }}'
       datastore: '{{ datastore_name }}'
       name: test_vm
-      networks: "{u'VM Network':u'{{ S11-SA-Mgmt }}'}"
+      networks: "{u'VM Network':u'{{ 'S11-SA-Mgmt' }}'}"
       power_on: false
       ovf: /mnt/c/test/S11-SA-ESXi-04/S11-SA-ESXi-04.ovf
     delegate_to: localhost
