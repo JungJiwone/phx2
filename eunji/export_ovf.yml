@@ -1,6 +1,6 @@
 -- https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_export_ovf_module.html#ansible-collections-community-vmware-vmware-export-ovf-module
 
----
+
 - hosts: localhost
   vars_files: ./vars.yml
 
