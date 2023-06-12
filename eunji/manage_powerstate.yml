@@ -1,4 +1,4 @@
--- https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_powerstate_module.html#ansible-collections-community-vmware-vmware-host-powerstate-module
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_powerstate_module.html#ansible-collections-community-vmware-vmware-host-powerstate-module
 
 - name: Set the state of a host system to reboot
   community.vmware.vmware_host_powerstate:

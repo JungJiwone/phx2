@@ -39,3 +39,6 @@ sa_esxi_template_name: "Temp-SA-ESXi-05"
 
 vcsa_template_name: "Temp-VCSA-ESXi-05"
 vcsa_snapshot_src_name: "Installed"
+
+esxi_ovf_name: "S11-SA-ESXi-04"
+ovf_dir: "/mnt/c/test/"
