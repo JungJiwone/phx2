@@ -1,0 +1,42 @@
+https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_service_manager_module.html#ansible-collections-community-vmware-vmware-host-service-manager-module
+
+- name: Start ntpd service setting for all ESXi Host in given Cluster
+  community.vmware.vmware_host_service_manager:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    cluster_name: '{{ cluster_name }}'
+    service_name: ntpd
+    state: present
+  delegate_to: localhost
+
+- name: Start ntpd setting for an ESXi Host
+  community.vmware.vmware_host_service_manager:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    service_name: ntpd
+    state: present
+  delegate_to: localhost
+
+- name: Start ntpd setting for an ESXi Host with Service policy
+  community.vmware.vmware_host_service_manager:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    service_name: ntpd
+    service_policy: 'on'
+    state: present
+  delegate_to: localhost
+
+- name: Stop ntpd setting for an ESXi Host
+  community.vmware.vmware_host_service_manager:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    service_name: ntpd
+    state: absent
+  delegate_to: localhost

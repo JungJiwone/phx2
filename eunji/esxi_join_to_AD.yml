@@ -1,0 +1,22 @@
+-- https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_active_directory_module.html#ansible-collections-community-vmware-vmware-host-active-directory-module
+
+- name: Join an AD domain
+  community.vmware.vmware_host_active_directory:
+    hostname: '{{ vcenter_hostname }}' #10.10.10.10
+    username: '{{ vcenter_username }}' #administrator@vsphere.local
+    password: '{{ vcenter_password }}' #VMware1!
+    esxi_hostname: '{{ esxi_hostname }}'
+    ad_domain: example.local #vclass.local
+    ad_user: adjoin #administrator
+    ad_password: Password123$ #VMWare1!
+    ad_state: present
+  delegate_to: localhost
+
+- name: Leave AD domain
+  community.vmware.vmware_host_active_directory:
+    hostname: '{{ vcenter_hostname }}' #10.10.10.10
+    username: '{{ vcenter_username }}' #administrator@vsphere.local
+    password: '{{ vcenter_password }}' #VMware1!
+    esxi_hostname: '{{ esxi_hostname }}'
+    ad_state: absent
+  delegate_to: localhost

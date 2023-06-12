@@ -1,0 +1,73 @@
+https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_firewall_manager_module.html#ansible-collections-community-vmware-vmware-host-firewall-manager-module
+
+- name: Enable vvold rule set for all ESXi Host in given Cluster
+  community.vmware.vmware_host_firewall_manager:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    cluster_name: cluster_name
+    rules:
+        - name: vvold
+          enabled: true
+          allowed_hosts:
+            all_ip: true
+  delegate_to: localhost
+
+- name: Enable vvold rule set for an ESXi Host
+  community.vmware.vmware_host_firewall_manager:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    rules:
+        - name: vvold
+          enabled: true
+          allowed_hosts:
+            all_ip: true
+  delegate_to: localhost
+
+- name: Manage multiple rule set for an ESXi Host
+  community.vmware.vmware_host_firewall_manager:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    rules:
+        - name: vvold
+          enabled: true
+          allowed_hosts:
+            all_ip: true
+        - name: CIMHttpServer
+          enabled: false
+  delegate_to: localhost
+
+- name: Manage IP and network based firewall permissions for ESXi
+  community.vmware.vmware_host_firewall_manager:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    rules:
+        - name: gdbserver
+          enabled: true
+          allowed_hosts:
+            all_ip: false
+            ip_address:
+              - 192.168.20.10
+              - 192.168.20.11
+        - name: CIMHttpServer
+          enabled: true
+          allowed_hosts:
+            all_ip: false
+            ip_network:
+              - 192.168.100.0/24
+        - name: remoteSerialPort
+          enabled: true
+          allowed_hosts:
+            all_ip: false
+            ip_address:
+              - 192.168.100.11
+            ip_network:
+              - 192.168.200.0/24
+  delegate_to: localhost
+Return Values

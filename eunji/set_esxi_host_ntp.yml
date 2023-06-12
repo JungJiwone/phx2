@@ -1,0 +1,42 @@
+-- 
+
+- name: Start ntpd service setting for all ESXi Host in given Cluster
+  community.vmware.vmware_host_service_manager:
+    hostname: '{{ vcenter_hostname }}' #10.10.10.10
+    username: '{{ vcenter_username }}' #administrator@vsphere.local
+    password: '{{ vcenter_password }}' #VMware1!
+    cluster_name: '{{ cluster_name }}' #S11
+    service_name: ntpd
+    state: present
+  delegate_to: localhost
+
+- name: Start ntpd setting for an ESXi Host
+  community.vmware.vmware_host_service_manager:
+    hostname: '{{ vcenter_hostname }}' #10.10.10.10
+    username: '{{ vcenter_username }}' #administrator@vsphere.local
+    password: '{{ vcenter_password }}' #VMware1!
+    esxi_hostname: '{{ esxi_hostname }}' #10.10.10.11
+    service_name: ntpd
+    state: present
+  delegate_to: localhost
+
+- name: Start ntpd setting for an ESXi Host with Service policy
+  community.vmware.vmware_host_service_manager:
+    hostname: '{{ vcenter_hostname }}' #10.10.10.10
+    username: '{{ vcenter_username }}' #administrator@vsphere.local
+    password: '{{ vcenter_password }}' #VMware1!
+    esxi_hostname: '{{ esxi_hostname }}' 
+    service_name: ntpd
+    service_policy: 'on'
+    state: present
+  delegate_to: localhost
+
+- name: Stop ntpd setting for an ESXi Host
+  community.vmware.vmware_host_service_manager:
+    hostname: '{{ vcenter_hostname }}' #10.10.10.10
+    username: '{{ vcenter_username }}' #administrator@vsphere.local
+    password: '{{ vcenter_password }}' #VMware1!
+    esxi_hostname: '{{ esxi_hostname }}'
+    service_name: ntpd
+    state: absent
+  delegate_to: localhost

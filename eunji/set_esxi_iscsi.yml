@@ -1,0 +1,74 @@
+https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_iscsi_module.html#ansible-collections-community-vmware-vmware-host-iscsi-module
+
+- name: Enable iSCSI of ESXi
+  community.vmware.vmware_host_iscsi:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    esxi_hostname: "{{ esxi_hostname }}"
+    state: enabled
+
+- name: Add a dynamic target to iSCSI config of ESXi
+  community.vmware.vmware_host_iscsi:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    esxi_hostname: "{{ esxi_hostname }}"
+    iscsi_config:
+      vmhba_name: vmhba65
+      send_target:
+        address: "{{ send_target_address }}"
+    state: present
+
+- name: Add a static target to iSCSI config of ESXi
+  community.vmware.vmware_host_iscsi:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    esxi_hostname: "{{ esxi_hostname }}"
+    iscsi_config:
+      vmhba_name: vmhba65
+      static_target:
+        iscsi_name: iqn.2011-08.com.xxxxxxx:as6104t-8c3e9d.target001
+        address: "{{ send_target_address }}"
+    state: present
+
+- name: Add VMKernels to iSCSI config of ESXi
+  community.vmware.vmware_host_iscsi:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    esxi_hostname: "{{ esxi_hostname }}"
+    iscsi_config:
+      vmhba_name: vmhba65
+      port_bind:
+        - vmk0
+        - vmk1
+    state: present
+
+- name: Use CHAP authentication
+  community.vmware.vmware_host_iscsi:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    esxi_hostname: "{{ esxi_hostname }}"
+    iscsi_config:
+      vmhba_name: vmhba65
+      authentication:
+        chap_auth_enabled: true
+        chap_authentication_type: chapPreferred
+        chap_name: chap_user_name
+        chap_secret: secret
+    state: present
+
+- name: Remove a dynamic target from iSCSI config of ESXi
+  community.vmware.vmware_host_iscsi:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    esxi_hostname: "{{ esxi_hostname }}"
+    iscsi_config:
+      vmhba_name: vmhba65
+      send_target:
+        address: "{{ send_target_address }}"
+    state: absent

@@ -1,0 +1,44 @@
+-- https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_dns_module.html#ansible-collections-community-vmware-vmware-host-dns-module
+
+- name: Configure DNS for an ESXi host
+  community.vmware.vmware_host_dns:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    type: static
+    host_name: esx01
+    domain: example.local
+    dns_servers:
+      - 192.168.1.10
+      - 192.168.1.11
+    search_domains:
+      - subdomain.example.local
+      - example.local
+  delegate_to: localhost
+
+- name: Configure DNS for all ESXi hosts of a cluster
+  community.vmware.vmware_host_dns:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    cluster_name: '{{ cluster_name }}'
+    type: static
+    domain: example.local
+    dns_servers:
+      - 192.168.1.10
+      - 192.168.1.11
+    search_domains:
+      - subdomain.example.local
+      - example.local
+  delegate_to: localhost
+
+- name: Configure DNS via DHCP for an ESXi host
+  community.vmware.vmware_host_dns:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    type: dhcp
+    device: vmk0
+  delegate_to: localhost

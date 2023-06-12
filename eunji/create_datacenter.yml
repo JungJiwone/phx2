@@ -1,0 +1,21 @@
+-- https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_datacenter_module.html#ansible-collections-community-vmware-vmware-datacenter-module
+
+
+- name: Create Datacenter
+  community.vmware.vmware_datacenter:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    datacenter_name: '{{ datacenter_name }}'
+    state: present
+  delegate_to: localhost
+
+- name: Delete Datacenter
+  community.vmware.vmware_datacenter:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    datacenter_name: '{{ datacenter_name }}'
+    state: absent
+  delegate_to: localhost
+  register: datacenter_delete_result
