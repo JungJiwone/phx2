@@ -14,4 +14,5 @@
       name: "{{ student_ID + '-SA-ESXi-04' }}"
       export_with_images: true
       export_dir: /mnt/c/test
+      export_with_extraconfig: true
     delegate_to: localhost
