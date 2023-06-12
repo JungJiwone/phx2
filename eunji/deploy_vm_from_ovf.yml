@@ -1,10 +1,10 @@
 # https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_deploy_ovf_module.html#ansible-collections-community-vmware-vmware-deploy-ovf-module
+# https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_guest_network_module.html#ansible-collections-community-vmware-vmware-guest-network-module
 
 ---
 - hosts: localhost
   vars_files: ./vars.yml
 
-# Deploys a new VM named 'test_VM' in specific datacenter/cluster, with network mapping taken from variable and using ova template from an absolute path
   tasks: 
   - name: Create SiteA ESXi VMs
     community.vmware.vmware_deploy_ovf:
@@ -16,7 +16,7 @@
       folder: '{{ folder_prefix + student_ID }}'
       esxi_hostname: "{{ esxi_hostname }}"
       datastore: '{{ datastore_name }}'
-      name: test_vm      
+      name: '{{ item.name }}'     
       networks: "{u'{{ 'S11-SA-Mgmt' }}':u'{{ 'S11-SA-Mgmt' }}'}"
       power_on: false
       ovf: /mnt/c/test/S11-SA-ESXi-04/S11-SA-ESXi-04.ovf
@@ -30,13 +30,21 @@
       password: "{{ vcenter_password }}"
       validate_certs: False
       name: test_vm
-      label: '{{ item.label }}'
-      switch: 'S11'
-      network_name: '{{ item.network_name }}'
+      networks:
+        - label: "Network adapter 1"
+          network_name: "{{ student_ID + '-SA-Mgmt' }}"
+        - label: "Network adapter 2"
+          network_name: "{{ student_ID + '-SA-Mgmt' }}"
+        - label: "Network adapter 3"
+          network_name: "{{ student_ID + '-Trunk' }}"
+        - label: "Network adapter 4"
+          network_name: "{{ student_ID + '-Trunk' }}"
       state: present
+    # with_items:
+    # - {label: "Network adapter 1",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    # - {label: "Network adapter 2",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    # - {label: "Network adapter 3",network_name: "{{ student_ID + '-Trunk' }}" }
+    # - {label: "Network adapter 4",network_name: "{{ student_ID + '-Trunk' }}" }
     with_items:
-    - {label: "Network adapter 1",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
-    - {label: "Network adapter 2",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
-    - {label: "Network adapter 3",network_name: "{{ student_ID + '-Trunk' }}" }
-    - {label: "Network adapter 4",network_name: "{{ student_ID + '-Trunk' }}" }
+      - {name: S11-SA-ESXi-05 }
     delegate_to: localhost
