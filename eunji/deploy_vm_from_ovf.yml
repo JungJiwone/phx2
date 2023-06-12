@@ -31,6 +31,7 @@
       validate_certs: False
       name: test_vm
       label: '{{ item.label }}'
+      switch: 'S11'
       network_name: '{{ item.network_name }}'
       state: present
     with_items:
