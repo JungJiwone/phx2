@@ -20,4 +20,4 @@
     file:
       path: /path/to/ovf_template/
       state: directory
-      mode: "0766"
+      mode: "0777"
