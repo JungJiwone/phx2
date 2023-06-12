@@ -14,12 +14,13 @@
       validate_certs: no
       datacenter: '{{datacenter_name}}'
       folder: '{{ folder_prefix + student_ID }}'
-      datastore: '{{ datastore_name }}'
-      name: test_vm
       esxi_hostname: "{{ esxi_hostname }}"
+      datastore: '{{ datastore_name }}'
+      name: test_vm      
       #networks: "{u'S11-SA-Mgmt':u'{{ ProvisioningNetworkLabel }}'}"
       power_on: false
       ovf: /mnt/c/test/S11-SA-ESXi-04/S11-SA-ESXi-04.ovf
+      wait_for_ip_address: true
     delegate_to: localhost
 
 # - community.vmware.vmware_deploy_ovf:
