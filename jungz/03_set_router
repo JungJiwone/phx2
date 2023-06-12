@@ -1,0 +1,68 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_vm_shell_module.html#ansible-collections-community-vmware-vmware-vm-shell-module
+
+---
+- hosts: localhost
+
+  vars_files: ./vars.yml
+
+  tasks: #작업은 한 개
+    - name: VyOS Router Configuration
+      community.vmware.vmware_vm_shell:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: 'false'
+        datacenter: '{{ datacenter_name }}'
+        folder: '{{ folder_prefix + student_ID }}'
+        vm_id: "{{ student_ID + '-Router' }}"
+        vm_id_type: vm_name 
+        vm_username: 'vyos'
+        vm_password: 'vyos'
+        vm_shell: /bin/vbash
+        vm_shell_cwd: "/tmp"
+        vm_shell_args: |-
+          -c "source /opt/vyatta/etc/functions/script-template
+          configure
+          set system login user admin full-name Admin_User
+          set system login user admin authentication plaintext-password VMware1!
+          set service ssh port 22
+          set system ipv6 disable
+          
+          set interfaces ethernet eth0 address dhcp
+          set interfaces ethernet eth0 description Outside
+          set interfaces ethernet eth0 ipv6 address no-default-link-local
+          set protocols static route 0.0.0.0/0 next-hop 200.200.200.254
+	  
+          set system name-server 200.200.200.245
+          set service ntp server kr.pool.ntp.or
+	  
+          set interfaces ethernet eth1 vif 20 description 'VLAN 20 - PHX Management'
+          set interfaces ethernet eth1 vif 20 address 20.20.20.1/24
+          set interfaces ethernet eth1 vif 20 ipv6 address no-default-link-local
+          
+          set interfaces ethernet eth1 vif 30 description 'VLAN 30 - PHX Storage'
+          set interfaces ethernet eth1 vif 30 address 20.20.30.1/24
+          set interfaces ethernet eth1 vif 30 ipv6 address no-default-link-local
+	  
+          set interfaces ethernet eth1 vif 40 description 'VLAN 40 - PHX vMotion'
+          set interfaces ethernet eth1 vif 40 address 20.20.40.1/24
+          set interfaces ethernet eth1 vif 40 ipv6 address no-default-link-local
+          
+          set interfaces ethernet eth1 vif 50 description 'VLAN 50 - PHX Production'
+          set interfaces ethernet eth1 vif 50 address 20.20.50.1/24
+          set interfaces ethernet eth1 vif 50 ipv6 address no-default-link-local
+
+          set nat source rule 20 outbound-interface eth0
+          set nat source rule 20 source address 20.20.20.0/24
+          set nat source rule 20 translation address masquerade
+
+          set nat source rule 50 outbound-interface eth0
+          set nat source rule 50 source address 20.20.50.0/24
+          set nat source rule 50 translation address masquerade
+
+          commit
+          save"
+        wait_for_process: True
+        timeout: 180
+      delegate_to: localhost
+      register: shell_command_with_wait_timeout
