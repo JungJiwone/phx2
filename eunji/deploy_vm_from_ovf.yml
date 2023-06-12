@@ -18,15 +18,6 @@
       datastore: '{{ datastore_name }}'
       name: test_vm      
       #networks: "{u'S11-SA-Mgmt':u'{{ ProvisioningNetworkLabel }}'}"
-      networks:
-        - name: "{{ student_ID + '-SA-Mgmt' }}"
-          device_type: vmxnet3
-        - name: "{{ student_ID + '-SA-Mgmt' }}"
-          device_type: vmxnet3
-        - name: "{{ student_ID + '-Trunk' }}"
-          device_type: vmxnet3
-        - name: "{{ student_ID + '-Trunk' }}"
-          device_type: vmxnet3
       power_on: false
       ovf: /mnt/c/test/S11-SA-ESXi-04/S11-SA-ESXi-04.ovf
       #wait_for_ip_address: true

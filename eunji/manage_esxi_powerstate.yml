@@ -1,0 +1,36 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_powerstate_module.html#ansible-collections-community-vmware-vmware-host-powerstate-module
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks:
+  - name: Set the state of a host system to reboot
+    community.vmware.vmware_host_powerstate:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: no
+      esxi_hostname: "10.10.10.14"
+      state: reboot-host
+    delegate_to: localhost
+    register: reboot_host
+
+  # - name: Set the state of a host system to power down to standby
+  #   community.vmware.vmware_host_powerstate:
+  #     hostname: '{{ vcenter_hostname }}'
+  #     username: '{{ vcenter_username }}'
+  #     password: '{{ vcenter_password }}'
+  #     esxi_hostname: '{{ esxi_hostname }}'
+  #     state: power-down-to-standby
+  #   delegate_to: localhost
+  #   register: power_down
+
+  # - name: Set the state of all host systems from cluster to reboot
+  #   community.vmware.vmware_host_powerstate:
+  #     hostname: '{{ vcenter_hostname }}'
+  #     username: '{{ vcenter_username }}'
+  #     password: '{{ vcenter_password }}'
+  #     cluster_name: '{{ cluster_name }}'
+  #     state: reboot-host
+  #   delegate_to: localhost
+  #   register: reboot_host
