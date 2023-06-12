@@ -5,12 +5,6 @@
   vars_files: ./vars.yml
 
   tasks:
-  - name: Create export directory
-    file:
-      path: /path/to/ovf_template/
-      state: directory
-      mode: "0777"
-
   - name : export_vm_ovf
     community.vmware.vmware_export_ovf:
       hostname: '{{ vcenter_hostname }}' 
@@ -19,5 +13,5 @@
       validate_certs: no
       name: "{{ student_ID + '-SA-ESXi-04' }}"
       export_with_images: true
-      export_dir: /path/to/ovf_template/
+      export_dir: /home/ansible
     delegate_to: localhost
