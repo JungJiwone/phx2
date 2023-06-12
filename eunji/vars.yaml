@@ -1,9 +1,9 @@
 ansible_python_interpreter: /bin/python3
 
-student_ID: "S00"
+student_ID: "S11"
 
 vcenter_hostname: "200.200.200.251"
-vcenter_username: "S00@vclass.kh"
+vcenter_username: "S11@vclass.kh"
 vcenter_password: "VMware1!"
 
 my_vcenter_hostname: "10.10.10.10"
@@ -20,14 +20,14 @@ folder_prefix: "Datacenter/vm/3.Students/"
 # S04, S09, S14, S19, S24 --> esxi_host : 200.200.200.249
 # S00, S05, S10, S15, S20 --> esxi_host : 200.200.200.250
 
-esxi_hostname: "200.200.200.250"
+esxi_hostname: "200.200.200.246"
 esxi_password: "VMware1!"
 esxi_username: "root"
 
 public_net: "VM-200.200.200.x"
 private_net: "{{ student_ID + '-Trunk' }}"
 
-datastore_name: "Local-05"
+datastore_name: "Local-01"
 
 
 dc_template_name: "Temp-WinSvr2022-ESXi-05"
