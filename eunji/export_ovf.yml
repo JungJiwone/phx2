@@ -1,10 +1,14 @@
 -- https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_export_ovf_module.html#ansible-collections-community-vmware-vmware-export-ovf-module
 
-- community.vmware.vmware_export_ovf:
-    hostname: '{{ vcenter_hostname }}'
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  - community.vmware.vmware_export_ovf:
+    hostname: '{{ vcenter_hostname }}' 
     username: '{{ vcenter_username }}'
     password: '{{ vcenter_password }}'
-    name: '{{ vm_name }}'
+    name: '{{ student_ID + '-SA-ESXi-04' }}'
     export_with_images: true
     export_dir: /path/to/ovf_template/
   delegate_to: localhost
