@@ -16,7 +16,7 @@
       folder: '{{ folder_prefix + student_ID }}'
       esxi_hostname: "{{ esxi_hostname }}"
       datastore: '{{ datastore_name }}'
-      name: '{{ item.name }}'     
+      name: '{{ item.vmname }}'     
       networks: "{u'{{ 'S11-SA-Mgmt' }}':u'{{ 'S11-SA-Mgmt' }}'}"
       power_on: false
       ovf: /mnt/c/test/S11-SA-ESXi-04/S11-SA-ESXi-04.ovf
@@ -46,5 +46,5 @@
     # - {label: "Network adapter 3",network_name: "{{ student_ID + '-Trunk' }}" }
     # - {label: "Network adapter 4",network_name: "{{ student_ID + '-Trunk' }}" }
     with_items:
-      - {name: S11-SA-ESXi-05 }
+      - {vmname: 'S11-SA-ESXi-05' }
     delegate_to: localhost
