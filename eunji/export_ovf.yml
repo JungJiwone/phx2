@@ -10,6 +10,7 @@
       hostname: '{{ vcenter_hostname }}' 
       username: '{{ vcenter_username }}'
       password: '{{ vcenter_password }}'
+      validate_certs: no
       name: "{{ student_ID + '-SA-ESXi-04' }}"
       export_with_images: true
       export_dir: /path/to/ovf_template/
