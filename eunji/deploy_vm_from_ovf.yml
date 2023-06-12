@@ -19,13 +19,13 @@
       name: test_vm      
       #networks: "{u"{{ student_ID + '-SA-Mgmt' }}":u"{{ student_ID + '-SA-Mgmt' }}"'}"
       network_map:
-        - name: eth0
+        - name: "eth0"
           network: "{{ student_ID + '-SA-Mgmt' }}"
-        - name: eth1
+        - name: "eth1"
         network: "{{ student_ID + '-SA-Mgmt' }}"
-        - name: eth2
+        - name: "eth2"
         network: "{{ student_ID + '-Trunk' }}"
-        - name: eth3
+        - name: "eth3"
         network: "{{ student_ID + '-Trunk' }}"
       power_on: false
       ovf: /mnt/c/test/S11-SA-ESXi-04/S11-SA-ESXi-04.ovf
