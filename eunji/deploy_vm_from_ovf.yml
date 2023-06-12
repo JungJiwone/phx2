@@ -24,7 +24,7 @@
     delegate_to: localhost
 
   - name: Configure network adapter
-    community.vmware.vmware_vm_network:
+    community.vmware.vmware_guest_network:
       hostname: "{{ vcenter_hostname }}"
       username: "{{ vcenter_username }}"
       password: "{{ vcenter_password }}"
@@ -33,16 +33,16 @@
       networks:
       - name: network1
         network_name: "{{ student_ID + '-SA-Mgmt' }}"
-        power_state: poweredon
+        state: present
       - name: network2
         network_name: "{{ student_ID + '-SA-Mgmt' }}"
-        power_state: poweredon
-      - name: network1
+        state: present
+      - name: network3
         network_name: "{{ student_ID + '-Trunk' }}"
-        power_state: poweredon
-      - name: network2
+        state: present
+      - name: network4
         network_name: "{{ student_ID + '-Trunk' }}"
-        power_state: poweredon
+        state: present
     delegate_to: localhost
 
 # - community.vmware.vmware_deploy_ovf:
