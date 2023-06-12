@@ -18,10 +18,10 @@
       datastore: '{{ datastore_name }}'
       name: test_vm      
       networks: 
-        "{{ student_ID + '-SA-Mgmt' }}": "{{ student_ID + '-SA-Mgmt' }}"
-        "{{ student_ID + '-SA-Mgmt' }}": "{{ student_ID + '-SA-Mgmt' }}"
-        "{{ student_ID + '-SA-Mgmt' }}": "{{ student_ID + '-SA-Mgmt' }}"
-        "{{ student_ID + '-SA-Mgmt' }}": "{{ student_ID + '-SA-Mgmt' }}"
+        "S11": "{{ student_ID + '-SA-Mgmt' }}"
+        "S11": "{{ student_ID + '-SA-Mgmt' }}"
+        "S11": "{{ student_ID + '-SA-Mgmt' }}"
+        "S11": "{{ student_ID + '-SA-Mgmt' }}"
         # "{u'{{ student_ID + '-SA-Mgmt' }}':u'{{ student_ID + '-SA-Mgmt' }}'}"
         # "{u'{{ student_ID + '-SA-Mgmt' }}':u'{{ student_ID + '-SA-Mgmt' }}'}"
         # "{u'{{ student_ID + '-SA-Mgmt' }}':u'{{ student_ID + '-Trunk' }}'}"
