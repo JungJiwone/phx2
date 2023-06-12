@@ -14,17 +14,4 @@
       name: "{{ student_ID + '-SA-ESXi-04' }}"
       export_with_images: true
       export_dir: /mnt/c/test
-      networks:
-        - name: "{{ student_ID + '-SA-Mgmt' }}"
-          switch_type: standard
-          connected: true
-        - name: "{{ student_ID + '-SA-Mgmt' }}"
-          switch_type: standard
-          connected: true
-        - name: "{{ student_ID + '-Trunk' }}"
-          switch_type: standard
-          connected: true
-        - name: "{{ student_ID + '-Trunk' }}"
-          switch_type: standard
-          connected: true
     delegate_to: localhost
