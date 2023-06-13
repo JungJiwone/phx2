@@ -2,7 +2,7 @@
 
 ---
 - hosts: localhost
-  vars_files: ./vars.yaml
+  vars_files: ./vars.yml
 
   tasks: 
     - name: Copy shell script to VM # 가상 머신에 shell script를 복사, task로 하나씩 등록하기
