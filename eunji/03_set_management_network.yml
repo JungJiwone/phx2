@@ -1,5 +1,5 @@
 ## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_guest_file_operation_module.html#ansible-collections-community-vmware-vmware-guest-file-operation-module 
-
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_vm_shell_module.html
 ---
 - hosts: localhost
   vars_files: ./vars.yml
@@ -55,7 +55,8 @@
         vm_id_type: vm_name
         vm_username: 'root'
         vm_password: 'VMware1!'
-        command: rm -rf /tmp/set_network.sh
+        vm_shell: /bin/sh
+        vm_shell_args: rm -rf /tmp/set_network.sh
         wait_for_process: True
       with_items:
       - {vmname: "{{ student_ID + '-SA-ESXi-04' }}" }
