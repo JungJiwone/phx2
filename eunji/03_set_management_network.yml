@@ -19,7 +19,6 @@
             src: '{{ item.file_name }}'
             dest: "/tmp/set_network.sh"
             overwrite: true
-            mode: 0755
       with_items:
       - {vmname: "{{ student_ID + '-SA-ESXi-04' }}",file_name: "/mnt/c/test/Phoenix/eunji/set_network_04.sh" }
       - {vmname: "{{ student_ID + '-SA-ESXi-05' }}",file_name: "/mnt/c/test/Phoenix/eunji/set_network_05.sh" }
