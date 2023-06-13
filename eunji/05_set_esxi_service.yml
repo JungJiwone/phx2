@@ -1,5 +1,6 @@
 # https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_service_manager_module.html#ansible-collections-community-vmware-vmware-host-service-manager-module
 # https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_ntp_module.html#ansible-collections-community-vmware-vmware-host-ntp-module
+
 ---
 - hosts: localhost
   vars_files: ./vars.yml
