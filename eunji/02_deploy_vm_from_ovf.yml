@@ -18,7 +18,7 @@
       datastore: '{{ datastore_name }}'
       name: '{{ item.vmname }}'     
       networks: "{u'{{ 'S11-SA-Mgmt' }}':u'{{ 'S11-SA-Mgmt' }}'}"
-      power_on: false
+      power_on: true
       ovf: /mnt/c/test/S11-SA-ESXi-04/S11-SA-ESXi-04.ovf
       wait_for_ip_address: true
     with_items:
