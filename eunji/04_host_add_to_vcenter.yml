@@ -39,9 +39,9 @@
       esxi_password: '{{ esxi_password }}' #VMware1!
       state: present
     with_items:
-    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
-    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}" }
-    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" } 
+    - {hostname: "{{ 'sa-esxi-04' }}" }
+    - {hostname: "{{ 'sa-esxi-05' }}" }
+    - {hostname: "{{ 'sa-esxi-06' }}" } 
     delegate_to: localhost
 
   # - name: Reconnect ESXi Host (with default username/password)
