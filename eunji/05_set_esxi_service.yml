@@ -41,15 +41,15 @@
     delegate_to: localhost
 
   - name: Start Shell
-  community.vmware.vmware_host_service_manager:
-    hostname: '{{ my_vcenter_hostname }}'
-    username: '{{ my_vcenter_username }}'
-    password: '{{ my_vcenter_password }}'
-    datacenter_name: TEST
-    cluster_name: S11
-    service_name: TSM
-    state: start
-  delegate_to: localhost
+    community.vmware.vmware_host_service_manager:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      datacenter_name: TEST
+      cluster_name: S11
+      service_name: TSM
+      state: start
+    delegate_to: localhost
 
   # - name: Stop ntpd setting for an ESXi Host
   #   community.vmware.vmware_host_service_manager:
