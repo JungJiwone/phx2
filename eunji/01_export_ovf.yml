@@ -11,8 +11,7 @@
       username: '{{ vcenter_username }}'
       password: '{{ vcenter_password }}'
       validate_certs: no
-      name: "{{ student_ID + '-SA-ESXi-04' }}"
-      export_with_images: true
+      name: "{{ student_ID + 'ESXi_Host' }}"
       export_dir: /mnt/c/test
       export_with_extraconfig: true
     delegate_to: localhost
