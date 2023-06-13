@@ -37,7 +37,7 @@
         vm_password: 'VMware1!'
         vm_shell: /bin/sh
         vm_shell_args: 
-          "chmod +x /tmp/set_network.sh"
+          #"chmod +x /tmp/set_network.sh"
           "/tmp/set_network.sh"
         wait_for_process: True
         timeout: 60
