@@ -11,6 +11,7 @@
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
+      validate_certs: 'false'
       esxi_hostname: '{{ item.hostname }}'
       service_name: ntpd
       state: present
@@ -25,6 +26,7 @@
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
+      validate_certs: 'false'
       esxi_hostname: '{{ item.hostname }}'
       state: present
       ntp_servers:
@@ -40,6 +42,7 @@
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
+      validate_certs: 'false'
       esxi_hostname: '{{ item.hostname }}'
       service_name: TSM-SSH
       state: start
@@ -54,6 +57,7 @@
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
+      validate_certs: 'false'
       esxi_hostname: '{{ item.hostname }}'
       service_name: TSM
       state: start
