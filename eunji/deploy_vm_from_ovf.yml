@@ -32,13 +32,17 @@
       username: "{{ vcenter_username }}"
       password: "{{ vcenter_password }}"
       validate_certs: False
-      name: test_vm
+      name: '{{ item.vmname }}'
       label: '{{ item.label }}' 
       network_name: '{{ item.network_name }}' 
       state: present
     with_items:
-    - {label: "Network adapter 1",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
-    - {label: "Network adapter 2",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
-    - {label: "Network adapter 3",network_name: "{{ student_ID + '-Trunk' }}" }
-    - {label: "Network adapter 4",network_name: "{{ student_ID + '-Trunk' }}" }
+    - {vmname: 'S11-SA-ESXi-05',label: "Network adapter 1",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    - {vmname: 'S11-SA-ESXi-05',label: "Network adapter 2",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    - {vmname: 'S11-SA-ESXi-05',label: "Network adapter 3",network_name: "{{ student_ID + '-Trunk' }}" }
+    - {vmname: 'S11-SA-ESXi-05',label: "Network adapter 4",network_name: "{{ student_ID + '-Trunk' }}" }
+    - {vmname: 'S11-SA-ESXi-06',label: "Network adapter 1",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    - {vmname: 'S11-SA-ESXi-06',label: "Network adapter 2",network_name: "{{ student_ID + '-SA-Mgmt' }}" }
+    - {vmname: 'S11-SA-ESXi-06',label: "Network adapter 3",network_name: "{{ student_ID + '-Trunk' }}" }
+    - {vmname: 'S11-SA-ESXi-06',label: "Network adapter 4",network_name: "{{ student_ID + '-Trunk' }}" }
     delegate_to: localhost
