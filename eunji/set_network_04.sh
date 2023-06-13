@@ -1,3 +1,5 @@
+#https://www.nakivo.com/blog/most-useful-esxcli-esxi-shell-commands-vmware-environment/
+
 #!/bin/sh
 
 # Set the network adapter name to be used as the management network

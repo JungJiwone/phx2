@@ -39,9 +39,9 @@
       esxi_password: '{{ esxi_password }}' #VMware1!
       state: present
     with_items:
-    - {hostname: "{{ student_ID + '-SA-ESXi-04.vsphere.local' }}" }
-    - {hostname: "{{ student_ID + '-SA-ESXi-05.vsphere.local' }}" }
-    - {hostname: "{{ student_ID + '-SA-ESXi-06.vsphere.local' }}" } 
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" } 
     delegate_to: localhost
 
   # - name: Delete Datacenter
