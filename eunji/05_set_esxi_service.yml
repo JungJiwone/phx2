@@ -11,10 +11,13 @@
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
-      datacenter_name: TEST
-      cluster_name: S11
+      esxi_hostname: '{{ item.hostname }}'
       service_name: ntpd
       state: present
+    with_items:
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" } 
     delegate_to: localhost
 
   - name: Set NTP servers for an ESXi Host
@@ -22,11 +25,14 @@
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
-      datacenter_name: TEST
-      cluster_name: S11
+      esxi_hostname: '{{ item.hostname }}'
       state: present
       ntp_servers:
         - 10.10.10.1
+    with_items:
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" } 
     delegate_to: localhost
 
   - name: Start SSH Service
@@ -34,10 +40,13 @@
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
-      datacenter_name: TEST
-      cluster_name: S11
+      esxi_hostname: '{{ item.hostname }}'
       service_name: TSM-SSH
       state: start
+    with_items:
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" } 
     delegate_to: localhost
 
   - name: Start Shell
@@ -45,10 +54,13 @@
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
-      datacenter_name: TEST
-      cluster_name: S11
+      esxi_hostname: '{{ item.hostname }}'
       service_name: TSM
       state: start
+    with_items:
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" } 
     delegate_to: localhost
 
   # - name: Stop ntpd setting for an ESXi Host
