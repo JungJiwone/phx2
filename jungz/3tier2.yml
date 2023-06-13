@@ -1,6 +1,4 @@
-https://gist.github.com/ksundong/105b607541d9a1e9a48a950f54b65c6a
-
-MySQL database shared with tomcat containers.
+# MySQL database shared with tomcat containers.
 db:
   image: mysql:latest
   environment:
@@ -9,10 +7,9 @@ db:
     MYSQL_USER: example_db_user
     MYSQL_PASSWORD: example_db_pass
   volumes:
-    
-"./db:/docker-entrypoint-initdb.d"
+    - "./db:/docker-entrypoint-initdb.d"
 
-First node of the first Tomcat virtual host.
+# First node of the first Tomcat virtual host.
 tomcat_1_node_1:
   image: tomcat:latest
   # Environment variables do not appear to be getting loaded the first time Tomcat starts!
@@ -23,12 +20,11 @@ tomcat_1_node_1:
     JDBC_USER: example_db_user
     JDBC_PASS: example_db_pass
   volumes:
-    
-"./tomcat/webapps:/usr/local/tomcat/webapps"
-links:
-db
+    - "./tomcat/webapps:/usr/local/tomcat/webapps"
+  links:
+    - db
 
-Second node of the first Tomcat virtual host.
+# Second node of the first Tomcat virtual host.
 tomcat_1_node_2:
   image: tomcat:latest
   environment:
@@ -38,12 +34,11 @@ tomcat_1_node_2:
     JDBC_USER: example_db_user
     JDBC_PASS: example_db_pass
   volumes:
-    
-"./tomcat/webapps:/usr/local/tomcat/webapps"
-links:
-db
+    - "./tomcat/webapps:/usr/local/tomcat/webapps"
+  links:
+    - db
 
-First node of the second Tomcat virtual host.
+# First node of the second Tomcat virtual host.
 tomcat_2_node_1:
   image: tomcat:latest
   environment:
@@ -53,20 +48,18 @@ tomcat_2_node_1:
     JDBC_USER: example_db_user
     JDBC_PASS: example_db_pass
   volumes:
-    
-"./tomcat/webapps:/usr/local/tomcat/webapps"
-links:
-db
+    - "./tomcat/webapps:/usr/local/tomcat/webapps"
+  links:
+    - db
 
-nginx container that automatically creates a load balancer / reverse proxy across the 3 tomcat containers / 2 virtual hosts.
+# nginx container that automatically creates a load balancer / reverse proxy across the 3 tomcat containers / 2 virtual hosts.
 nginx:
   image: jwilder/nginx-proxy:latest
   ports:
-    
-"80:80"
-volumes:
-"/var/run/docker.sock:/tmp/docker.sock:ro"
-links:
-tomcat_1_node_1
-tomcat_1_node_2
-tomcat_2_node_1
+    - "80:80"
+  volumes:
+    - "/var/run/docker.sock:/tmp/docker.sock:ro"
+  links:
+    - tomcat_1_node_1
+    - tomcat_1_node_2
+    - tomcat_2_node_1
