@@ -172,7 +172,6 @@
         ip_address: '{{ item.ip }}'
         subnet_mask: 255.255.255.0
       state: present
-      enable_mgmt: true
     with_items:
     - {hostname: "{{ 'sa-esxi-04.vclass.local' }}",ip: "{{ '10.10.11.11' }}" }
     - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",ip: "{{ '10.10.11.12' }}" }
@@ -214,7 +213,7 @@
         ip_address: '{{ item.ip }}'
         subnet_mask: 255.255.255.0
       state: present
-      enable_mgmt: true
+      enable_vsan: true
     with_items:
     - {hostname: "{{ 'sa-esxi-04.vclass.local' }}",ip: "{{ '10.10.100.11' }}" }
     - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",ip: "{{ '10.10.100.12' }}" }
