@@ -45,7 +45,7 @@
       - {vmname: "{{ student_ID + '-SA-ESXi-06' }}" }  
       delegate_to: localhost
 
-    - name: Delete copied powershell script #실행한 powershell script 삭제
+    - name: Delete copied shell script #실행한 shell script 삭제
       community.vmware.vmware_vm_shell:
         hostname: '{{ vcenter_hostname }}'
         username: '{{ vcenter_username }}'
