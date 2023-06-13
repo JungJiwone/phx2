@@ -37,15 +37,16 @@
     delegate_to: localhost
 
   - name: Configure VMkernel NIC
-    community.vmware.vmware_host_vmhba_nic:
+    community.vmware.vmware_host_vmkernel:
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
       validate_certs: 'false'
       esxi_hostname: '{{ item.hostname }}'
-      vmhba_name: 'vmk1'  # VMkernel NIC의 vmhba 이름
+      vmkernel_name: 'vmk1'  # VMkernel NIC의 vmhba 이름
       nic_device: 'vmnic2'  # 사용할 물리적 NIC의 장치 이름
-      enable: true
+      enable_mgmt_traffic: false
+      enable_vmotion_traffic: false
       force: true
     with_items:
     - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
