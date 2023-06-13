@@ -23,6 +23,7 @@
       wait_for_ip_address: true
     with_items:
     - {vmname: 'S11-SA-ESXi-05' }
+    - {vmname: 'S11-SA-ESXi-06' }
     delegate_to: localhost
 
   - name: Configure network adapter
