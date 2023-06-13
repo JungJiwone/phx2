@@ -199,27 +199,6 @@
     - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",ip: "{{ '10.10.12.12' }}" }
     - {hostname: "{{ 'sa-esxi-06.vclass.local' }}",ip: "{{ '10.10.12.13' }}" } 
     delegate_to: localhost
-  
-  - name: Add vmkernel port to Distributed Switch prod
-    community.vmware.vmware_vmkernel:
-      hostname: '{{ my_vcenter_hostname }}'
-      username: '{{ my_vcenter_username }}'
-      password: '{{ my_vcenter_password }}'
-      validate_certs: no
-      esxi_hostname: '{{ item.hostname }}'
-      dvswitch_name: dvSwitch
-      portgroup_name: dpg_prod
-      network:
-        type: 'static'
-        ip_address: '{{ item.ip }}'
-        subnet_mask: 255.255.255.0
-      state: present
-      enable_mgmt: true
-    with_items:
-    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}",ip: "{{ '10.10.13.11' }}" }
-    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",ip: "{{ '10.10.13.12' }}" }
-    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}",ip: "{{ '10.10.13.13' }}" } 
-    delegate_to: localhost
 
   - name: Add vmkernel port to Distributed Switch vsan
     community.vmware.vmware_vmkernel:
