@@ -1,0 +1,36 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_guest_module.html
+
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks: 
+    - name: Create a virtual machine from Windows customize
+      community.vmware.vmware_guest:
+        hostname: '{{ vsphere_hostname }}'  # 20.20.20.20
+        username: '{{ vsphere_username }}'  # administrator@vsphere.local
+        password: '{{ vsphere_password }}'  # VMware1!
+        validate_certs: 'false'
+        folder: "/"
+        datacenter: "{{ vsphere_datacenter }}"
+        name: "k8s-master"
+        state: poweredon
+        guest_id: ubuntu64Guest
+        esxi_hostname: "phx-esxi-03.vclass.local"   #"phx-esxi-01.vclass.local"
+        disk:
+        - size_gb: 16
+          type: thick
+          datastore: "{{ vsphere_datastore }}"
+        hardware:
+          memory_mb: 4096
+          num_cpus: 2
+        networks:
+        - name: "DPG-Prod"  # PHX-Mgmt 포트 그룹에 연결
+          device_type: vmxnet3
+        cdrom:
+        - controller_number: 0
+          unit_number: 0
+          state: present
+          type: client
+      delegate_to: localhost
+      register: deploy
