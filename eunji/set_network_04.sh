@@ -1,4 +1,6 @@
 #https://www.nakivo.com/blog/most-useful-esxcli-esxi-shell-commands-vmware-environment/
+#https://docs.vmware.com/kr/VMware-vSphere/7.0/com.vmware.vsphere.networking.doc/GUID-8BCBB25E-9A84-4322-94BC-C556DE9C2956.html
+#https://vdc-download.vmware.com/vmwb-repository/dcr-public/24be7af7-d9cd-48d9-bab8-8c91614be19d/0ca33108-8017-4b40-86b9-f066456894ea/doc/GUID-33939200-1D76-4C67-9607-77C586ADDFBA.html
 
 #!/bin/sh
 

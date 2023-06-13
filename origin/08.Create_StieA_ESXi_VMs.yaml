@@ -66,8 +66,8 @@
           type: iso
           iso_path: '{{ "[" + datastore_name + "]\ISO\VMware-VMvisor-Installer-7.0U3l-21424296.x86_64.iso" }}'          
       with_items:
-      - {vmname: "{{ student_ID + '-SA-ESXi-01' }}" }
-      - {vmname: "{{ student_ID + '-SA-ESXi-02' }}" }
-      - {vmname: "{{ student_ID + '-SA-ESXi-03' }}" }      
+      - {vmname: "{{ student_ID + '-SA-ESXi-04' }}" }
+      - {vmname: "{{ student_ID + '-SA-ESXi-05' }}" }
+      - {vmname: "{{ student_ID + '-SA-ESXi-06' }}" }      
       delegate_to: localhost
       register: deploy_vm
