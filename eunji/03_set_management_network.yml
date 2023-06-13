@@ -1,0 +1,64 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_guest_file_operation_module.html#ansible-collections-community-vmware-vmware-guest-file-operation-module 
+
+---
+- hosts: localhost
+  vars_files: ./vars.yaml
+
+  tasks: 
+    - name: Copy shell script to VM # 가상 머신에 shell script를 복사, task로 하나씩 등록하기
+      community.vmware.vmware_guest_file_operation:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: '{{ item.vmname }}' #가상머신을 이름으로 찾아감
+        vm_id_type: vm_name
+        vm_username: 'root'
+        vm_password: 'VMware1!'
+        copy:
+            src: '{{ item.file_name }}'
+            dest: "/tmp/set_network.sh"
+            overwrite: true
+            mode: 0755
+      with_items:
+      - {vmname: "{{ student_ID + '-SA-ESXi-04' }}",file_name: "/mnt/c/test/Phoenix/eunji/set_network_04.sh" }
+      - {vmname: "{{ student_ID + '-SA-ESXi-05' }}",file_name: "/mnt/c/test/Phoenix/eunji/set_network_05.sh" }
+      - {vmname: "{{ student_ID + '-SA-ESXi-06' }}",file_name: "/mnt/c/test/Phoenix/eunji/set_network_06.sh" }  
+      delegate_to: localhost
+
+    - name: Execute shell script on ESXi host
+      community.vmware.vmware_vm_shell:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: '{{ item.vmname }}'
+        vm_id_type: vm_name
+        vm_username: 'root'
+        vm_password: 'VMware1!'
+        command: /bin/sh /tmp/set_network.sh
+        wait_for_process: True
+        timeout: 60
+      with_items:
+      - {vmname: "{{ student_ID + '-SA-ESXi-04' }}" }
+      - {vmname: "{{ student_ID + '-SA-ESXi-05' }}" }
+      - {vmname: "{{ student_ID + '-SA-ESXi-06' }}" }  
+      delegate_to: localhost
+
+    - name: Delete copied powershell script #실행한 powershell script 삭제
+      community.vmware.vmware_vm_shell:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: '{{ item.vmname }}'
+        vm_id_type: vm_name
+        vm_username: 'root'
+        vm_password: 'VMware1!'
+        command: rm -rf /tmp/set_network.sh
+        wait_for_process: True
+      with_items:
+      - {vmname: "{{ student_ID + '-SA-ESXi-04' }}" }
+      - {vmname: "{{ student_ID + '-SA-ESXi-05' }}" }
+      - {vmname: "{{ student_ID + '-SA-ESXi-06' }}" }  
+      delegate_to: localhost
