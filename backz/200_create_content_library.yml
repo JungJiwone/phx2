@@ -1,0 +1,18 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_content_library_manager_module.html#ansible-collections-community-vmware-vmware-content-library-manager-module
+
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks: 
+    - name: Create Local Content Library
+      community.vmware.vmware_content_library_manager:
+        hostname: '{{ vsphere_hostname }}'  # 20.20.20.20
+        username: '{{ vsphere_username }}'  # administrator@vsphere.local
+        password: '{{ vsphere_password }}'  # VMware1!
+        validate_certs: 'false'
+        library_name: "{{ student_ID + '-Contents' }}"  # PHX-Contents
+        library_type: local
+        datastore_name: "iSCSI-0"
+        state: present
+      delegate_to: localhost
