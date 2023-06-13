@@ -13,6 +13,8 @@ esxcfg-vswitch -L "vmnic1" "vSwitch0"
 # Configure the IP address, netmask, default gateway, dns server for the management network
 esxcli network ip interface ipv4 set -i vmk0 -t static -g 10.10.10.1 -I 10.10.10.16 -N 255.255.255.0
 esxcli network ip dns server add --server="10.10.10.2"
+esxcli system hostname set --host="sa-esxi-06"
+esxcli system hostname --domain="vclass.local"
 
 # restart management network
 service.sh restart
