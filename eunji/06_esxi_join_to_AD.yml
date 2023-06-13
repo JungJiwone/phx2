@@ -10,16 +10,15 @@
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
       validate_certs: 'false'
-      esxi_hostname: '{{ item.hostname }}'
-      hostname: '{{ item.name }}'
+      cluster_name: S11
       ad_domain: vclass.local
       ad_user: administrator
       ad_password: VMWare1!
       ad_state: present
-    with_items:
-    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}",name: "{{ 'sa-esxi-04.vclass.local' }}" }
-    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",name: "{{ 'sa-esxi-04.vclass.local' }}" }
-    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}",name: "{{ 'sa-esxi-04.vclass.local' }}" } 
+    # with_items:
+    # - {hostname: "{{ 'sa-esxi-04.vclass.local' }}",name: "{{ 'sa-esxi-04.vclass.local' }}" }
+    # - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",name: "{{ 'sa-esxi-05.vclass.local' }}" }
+    # - {hostname: "{{ 'sa-esxi-06.vclass.local' }}",name: "{{ 'sa-esxi-06.vclass.local' }}" } 
     delegate_to: localhost
 
   # - name: Leave AD domain
