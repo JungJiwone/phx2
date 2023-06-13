@@ -7,14 +7,14 @@
   vars_files: ./vars.yml
 
   tasks:
-  - name: Create DSwitch
+  - name: Create dvSwitch
     community.vmware.vmware_dvswitch:
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
       validate_certs: no
       datacenter: TEST
-      switch: DSwitch
+      switch: dvSwitch
       version: 7.0.3
       mtu: 1500
       uplink_quantity: 2
@@ -28,14 +28,14 @@
       timeout: 10
     delegate_to: localhost
 
-  - name: Add Hosts to DSwitch
+  - name: Add Hosts to dvSwitch
     community.vmware.vmware_dvs_host:
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
       validate_certs: no
       esxi_hostname: '{{ item.hostname }}'
-      switch_name: DSwitch
+      switch_name: dvSwitch
       vmnics:
           - vmnic2
           - vmnic3
@@ -53,49 +53,49 @@
       password: '{{ my_vcenter_password }}'
       validate_certs: no
       portgroup_name: dpg_vsan
-      switch_name: DSwitch
+      switch_name: dvSwitch
       vlan_id: 100
       num_ports: 8
       port_binding: static
       state: present
     delegate_to: localhost
 
-  - name: Adding vlan iscsi portgroup to DSwitch
+  - name: Adding vlan iscsi portgroup to dvSwitch
     community.vmware.vmware_dvs_portgroup:
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
       validate_certs: no
       portgroup_name: dpg_iscsi
-      switch_name: DSwitch
+      switch_name: dvSwitch
       vlan_id: 11
       num_ports: 8
       port_binding: static
       state: present
     delegate_to: localhost
 
-  - name: Adding vlan vmotion portgroup to DSwitch
+  - name: Adding vlan vmotion portgroup to dvSwitch
     community.vmware.vmware_dvs_portgroup:
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
       validate_certs: no
       portgroup_name: dpg_vmotion
-      switch_name: DSwitch
+      switch_name: dvSwitch
       vlan_id: 12
       num_ports: 8
       port_binding: static
       state: present
     delegate_to: localhost
 
-  - name: Adding vlan prod portgroup to DSwitch
+  - name: Adding vlan prod portgroup to dvSwitch
     community.vmware.vmware_dvs_portgroup:
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
       validate_certs: no
       portgroup_name: dpg_prod
-      switch_name: DSwitch
+      switch_name: dvSwitch
       vlan_id: 13
       num_ports: 8
       port_binding: static
@@ -109,7 +109,7 @@
   #     password: '{{ my_vcenter_password }}'
   #     validate_certs: no
   #     portgroup_name: dpg_iscsi
-  #     switch_name: DSwitch
+  #     switch_name: dvSwitch
   #     vlan_id: 11
   #     num_ports: 8
   #     port_binding: static
@@ -123,7 +123,7 @@
   #     password: '{{ my_vcenter_password }}'
   #     validate_certs: no
   #     portgroup_name: dpg_vmotion
-  #     switch_name: dSwitch
+  #     switch_name: dvSwitch
   #     vlan_id: 12
   #     num_ports: 8
   #     port_binding: static
@@ -137,7 +137,7 @@
   #     password: '{{ my_vcenter_password }}'
   #     validate_certs: no
   #     portgroup_name: dpg_prod
-  #     switch_name: dSwitch
+  #     switch_name: dvSwitch
   #     vlan_id: 13
   #     num_ports: 8
   #     port_binding: static
@@ -151,7 +151,7 @@
   #     password: '{{ my_vcenter_password }}'
   #     validate_certs: no
   #     portgroup_name: dpg_vsan
-  #     switch_name: dSwitch
+  #     switch_name: dvSwitch
   #     vlan_id: 100
   #     num_ports: 8
   #     port_binding: static
@@ -165,7 +165,7 @@
       password: '{{ my_vcenter_password }}'
       validate_certs: no
       esxi_hostname: '{{ item.hostname }}'
-      dvswitch_name: DSwitch
+      dvswitch_name: dvSwitch
       portgroup_name: dpg_iscsi
       network:
         type: 'static'
@@ -186,7 +186,7 @@
       password: '{{ my_vcenter_password }}'
       validate_certs: no
       esxi_hostname: '{{ item.hostname }}'
-      dvswitch_name: DSwitch
+      dvswitch_name: dvSwitch
       portgroup_name: dpg_vmotion
       network:
         type: 'static'
@@ -207,7 +207,7 @@
       password: '{{ my_vcenter_password }}'
       validate_certs: no
       esxi_hostname: '{{ item.hostname }}'
-      dvswitch_name: DSwitch
+      dvswitch_name: dvSwitch
       portgroup_name: dpg_prod
       network:
         type: 'static'
@@ -228,7 +228,7 @@
       password: '{{ my_vcenter_password }}'
       validate_certs: no
       esxi_hostname: '{{ item.hostname }}'
-      dvswitch_name: DSwitch
+      dvswitch_name: dvSwitch
       portgroup_name: dpg_vsan
       network:
         type: 'static'
