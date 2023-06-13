@@ -19,8 +19,8 @@
   - name: Create Cluster
     community.vmware.vmware_cluster:
       hostname: '{{ my_vcenter_hostname }}' #10.10.10.10
-      username: '{{ my_vcenter_hostname }}' #administrator@vsphere.local
-      password: '{{ my_vcenter_hostname }}' #VMware1!
+      username: '{{ my_vcenter_username }}' #administrator@vsphere.local
+      password: '{{ my_vcenter_password }}' #VMware1!
       validate_certs: 'false'
       datacenter_name: TEST
       cluster_name: S11
@@ -29,8 +29,8 @@
   - name: Add ESXi Host to vCenter
     community.vmware.vmware_host:
       hostname: '{{ my_vcenter_hostname }}' #10.10.10.10
-      username: '{{ my_vcenter_hostname }}' #administrator@vsphere.local
-      password: '{{ my_vcenter_hostname }}' #VMware1!
+      username: '{{ my_vcenter_username }}' #administrator@vsphere.local
+      password: '{{ my_vcenter_password }}' #VMware1!
       validate_certs: 'false'
       datacenter_name: TEST
       cluster_name: S11
