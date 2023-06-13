@@ -19,9 +19,9 @@
 
   - name: Set NTP servers for an ESXi Host
     community.vmware.vmware_host_ntp:
-      hostname: '{{ vcenter_hostname }}'
-      username: '{{ vcenter_username }}'
-      password: '{{ vcenter_password }}'
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
       datacenter_name: TEST
       cluster_name: S11
       state: present
