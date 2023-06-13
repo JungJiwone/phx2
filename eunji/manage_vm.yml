@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks: 
+  - name: Add Management vmkernel port using static network type
+    community.vmware.vmware_vmkernel:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        esxi_hostname: S11-SA-ESXi-05
+        vswitch_name: S11
+        portgroup_name: S11-SA-Mgmt
+        device: vmk0
+        enable_mgmt: true
+        network:
+          type: 'static'
+          ip_address: 10.10.10.13
+          subnet_mask: 255.255.255.0
+          default_gateway: 10.10.10.1
+        state: present
+        enable_mgmt: true
+    delegate_to: localhost

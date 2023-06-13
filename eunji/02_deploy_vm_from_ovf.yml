@@ -46,3 +46,4 @@
     - {vmname: 'S11-SA-ESXi-06',label: "Network adapter 3",network_name: "{{ student_ID + '-Trunk' }}" }
     - {vmname: 'S11-SA-ESXi-06',label: "Network adapter 4",network_name: "{{ student_ID + '-Trunk' }}" }
     delegate_to: localhost
+

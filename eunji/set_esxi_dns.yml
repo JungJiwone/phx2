@@ -1,4 +1,4 @@
--- https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_dns_module.html#ansible-collections-community-vmware-vmware-host-dns-module
+# https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_dns_module.html#ansible-collections-community-vmware-vmware-host-dns-module
 
 - name: Configure DNS for an ESXi host
   community.vmware.vmware_host_dns:
