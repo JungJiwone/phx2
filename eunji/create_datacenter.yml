@@ -11,6 +11,7 @@
       hostname: '{{ my_vcenter_hostname }}'
       username: '{{ my_vcenter_username }}'
       password: '{{ my_vcenter_password }}'
+      validate_certs: 'false'
       datacenter_name: TEST
       state: present
     delegate_to: localhost
@@ -20,6 +21,7 @@
       hostname: '{{ my_vcenter_hostname }}' #10.10.10.10
       username: '{{ my_vcenter_hostname }}' #administrator@vsphere.local
       password: '{{ my_vcenter_hostname }}' #VMware1!
+      validate_certs: 'false'
       datacenter_name: TEST
       cluster_name: S11
     delegate_to: localhost
@@ -29,6 +31,7 @@
       hostname: '{{ my_vcenter_hostname }}' #10.10.10.10
       username: '{{ my_vcenter_hostname }}' #administrator@vsphere.local
       password: '{{ my_vcenter_hostname }}' #VMware1!
+      validate_certs: 'false'
       datacenter_name: TEST
       cluster_name: S11
       esxi_hostname: '{{ item.hostname }}' #S11-SA-ESXi-01.vsphere.local
