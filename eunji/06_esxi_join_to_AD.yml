@@ -17,9 +17,9 @@
       ad_password: VMWare1!
       ad_state: present
     with_items:
-    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}",name: "{{ 'sa-esxi-04' }}" }
-    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",name: "{{ 'sa-esxi-04' }}" }
-    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}",name: "{{ 'sa-esxi-04' }}" } 
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}",name: "{{ 'sa-esxi-04.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",name: "{{ 'sa-esxi-04.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}",name: "{{ 'sa-esxi-04.vclass.local' }}" } 
     delegate_to: localhost
 
   # - name: Leave AD domain
