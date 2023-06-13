@@ -1,5 +1,10 @@
--- https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_cluster_module.html#ansible-collections-community-vmware-vmware-cluster-module
+# https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_cluster_module.html#ansible-collections-community-vmware-vmware-cluster-module
+# 
+---
+- hosts: localhost
+  vars_files: ./vars.yml
 
+  tasks:
 - name: Create Cluster
   community.vmware.vmware_cluster:
     hostname: '{{ vcenter_hostname }}' #10.10.10.10

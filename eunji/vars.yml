@@ -21,8 +21,8 @@ folder_prefix: "Datacenter/vm/3.Students/"
 # S00, S05, S10, S15, S20 --> esxi_host : 200.200.200.250
 
 esxi_hostname: "200.200.200.246"
-esxi_password: "VMware1!"
 esxi_username: "root"
+esxi_password: "VMware1!"
 
 public_net: "VM-200.200.200.x"
 private_net: "{{ student_ID + '-Trunk' }}"

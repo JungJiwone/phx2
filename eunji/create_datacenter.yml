@@ -1,4 +1,5 @@
 # https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_datacenter_module.html#ansible-collections-community-vmware-vmware-datacenter-module
+# https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_cluster_module.html#ansible-collections-community-vmware-vmware-cluster-module
 
 ---
 - hosts: localhost
@@ -30,10 +31,14 @@
       password: '{{ my_vcenter_hostname }}' #VMware1!
       datacenter_name: TEST
       cluster_name: S11
-      esxi_hostname: '{{ esxi_hostname }}' #S11-SA-ESXi-01
+      esxi_hostname: '{{ item.hostname }}' #S11-SA-ESXi-01.vsphere.local
       esxi_username: '{{ esxi_username }}' #root  
       esxi_password: '{{ esxi_password }}' #VMware1!
       state: present
+    with_items:
+    - {hostname: "{{ student_ID + '-SA-ESXi-04.vsphere.local' }}" }
+    - {hostname: "{{ student_ID + '-SA-ESXi-05.vsphere.local' }}" }
+    - {hostname: "{{ student_ID + '-SA-ESXi-06.vsphere.local' }}" } 
     delegate_to: localhost
 
   # - name: Delete Datacenter
@@ -46,3 +51,12 @@
   #   delegate_to: localhost
   #   register: datacenter_delete_result
 
+  # - name: Delete Cluster
+  #   community.vmware.vmware_cluster:
+  #     hostname: '{{ vcenter_hostname }}' #10.10.10.10
+  #     username: '{{ vcenter_username }}' #administrator@vsphere.local
+  #     password: '{{ vcenter_password }}' #VMware1!
+  #     datacenter_name: KH
+  #     cluster_name: S11
+  #     state: absent
+  #   delegate_to: localhost
