@@ -1,0 +1,243 @@
+# https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_dvswitch_module.html
+# https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_dvs_portgroup_module.html
+# https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_vmkernel_module.html#ansible-collections-community-vmware-vmware-vmkernel-module
+
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks:
+  - name: Create DSwitch
+    community.vmware.vmware_dvswitch:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: no
+      datacenter: TEST
+      switch: DSwitch
+      version: 7.0.3
+      mtu: 1500
+      uplink_quantity: 2
+      discovery_protocol: cdp
+      discovery_operation: listen
+      state: present
+    delegate_to: localhost
+  
+  - name: Waiting 10 seconds for completing switch
+    wait_for:
+      timeout: 10
+    delegate_to: localhost
+
+  - name: Add Hosts to DSwitch
+    community.vmware.vmware_dvs_host:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: no
+      esxi_hostname: '{{ item.hostname }}'
+      switch_name: DSwitch
+      vmnics:
+          - vmnic2
+          - vmnic3
+      state: present
+    with_items:
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" } 
+    delegate_to: localhost
+
+  - name: Adding vlan vsan portgroup to DSwtich
+    community.vmware.vmware_dvs_portgroup:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: no
+      portgroup_name: dpg_vsan
+      switch_name: DSwitch
+      vlan_id: 100
+      num_ports: 8
+      port_binding: static
+      state: present
+    delegate_to: localhost
+
+  - name: Adding vlan iscsi portgroup to DSwitch
+    community.vmware.vmware_dvs_portgroup:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: no
+      portgroup_name: dpg_iscsi
+      switch_name: DSwitch
+      vlan_id: 11
+      num_ports: 8
+      port_binding: static
+      state: present
+    delegate_to: localhost
+
+  - name: Adding vlan vmotion portgroup to DSwitch
+    community.vmware.vmware_dvs_portgroup:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: no
+      portgroup_name: dpg_vmotion
+      switch_name: DSwitch
+      vlan_id: 12
+      num_ports: 8
+      port_binding: static
+      state: present
+    delegate_to: localhost
+
+  - name: Adding vlan prod portgroup to DSwitch
+    community.vmware.vmware_dvs_portgroup:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: no
+      portgroup_name: dpg_prod
+      switch_name: DSwitch
+      vlan_id: 13
+      num_ports: 8
+      port_binding: static
+      state: present
+    delegate_to: localhost
+
+  # - name: Create vlan portgroup with all security and port policies iscsi
+  #   community.vmware.vmware_dvs_portgroup:
+  #     hostname: '{{ my_vcenter_hostname }}'
+  #     username: '{{ my_vcenter_username }}'
+  #     password: '{{ my_vcenter_password }}'
+  #     validate_certs: no
+  #     portgroup_name: dpg_iscsi
+  #     switch_name: DSwitch
+  #     vlan_id: 11
+  #     num_ports: 8
+  #     port_binding: static
+  #     state: present
+  #   delegate_to: localhost
+
+  # - name: Create vlan portgroup with all security and port policies vmotion
+  #   community.vmware.vmware_dvs_portgroup:
+  #     hostname: '{{ my_vcenter_hostname }}'
+  #     username: '{{ my_vcenter_username }}'
+  #     password: '{{ my_vcenter_password }}'
+  #     validate_certs: no
+  #     portgroup_name: dpg_vmotion
+  #     switch_name: dSwitch
+  #     vlan_id: 12
+  #     num_ports: 8
+  #     port_binding: static
+  #     state: present
+  #   delegate_to: localhost
+
+  # - name: Create vlan portgroup with all security and port policies prod
+  #   community.vmware.vmware_dvs_portgroup:
+  #     hostname: '{{ my_vcenter_hostname }}'
+  #     username: '{{ my_vcenter_username }}'
+  #     password: '{{ my_vcenter_password }}'
+  #     validate_certs: no
+  #     portgroup_name: dpg_prod
+  #     switch_name: dSwitch
+  #     vlan_id: 13
+  #     num_ports: 8
+  #     port_binding: static
+  #     state: present
+  #   delegate_to: localhost
+
+  # - name: Create vlan portgroup with all security and port policies vsan
+  #   community.vmware.vmware_dvs_portgroup:
+  #     hostname: '{{ my_vcenter_hostname }}'
+  #     username: '{{ my_vcenter_username }}'
+  #     password: '{{ my_vcenter_password }}'
+  #     validate_certs: no
+  #     portgroup_name: dpg_vsan
+  #     switch_name: dSwitch
+  #     vlan_id: 100
+  #     num_ports: 8
+  #     port_binding: static
+  #     state: present
+  #   delegate_to: localhost
+  
+  - name: Add vmkernel port to Distributed Switch iscsi
+    community.vmware.vmware_vmkernel:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: no
+      esxi_hostname: '{{ item.hostname }}'
+      dvswitch_name: DSwitch
+      portgroup_name: dpg_iscsi
+      network:
+        type: 'static'
+        ip_address: '{{ item.ip }}'
+        subnet_mask: 255.255.255.0
+      state: present
+      enable_mgmt: true
+    with_items:
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}",ip: "{{ '10.10.11.11' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",ip: "{{ '10.10.11.12' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}",ip: "{{ '10.10.11.13' }}" } 
+    delegate_to: localhost
+  
+  - name: Add vMotion vmkernel port with vMotion TCP/IP stack
+    community.vmware.vmware_vmkernel:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: no
+      esxi_hostname: '{{ item.hostname }}'
+      dvswitch_name: DSwitch
+      portgroup_name: dpg_vmotion
+      network:
+        type: 'static'
+        ip_address: '{{ item.ip }}'
+        subnet_mask: 255.255.255.0
+        tcpip_stack: vmotion
+      state: present
+    with_items:
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}",ip: "{{ '10.10.12.11' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",ip: "{{ '10.10.12.12' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}",ip: "{{ '10.10.12.13' }}" } 
+    delegate_to: localhost
+  
+  - name: Add vmkernel port to Distributed Switch prod
+    community.vmware.vmware_vmkernel:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: no
+      esxi_hostname: '{{ item.hostname }}'
+      dvswitch_name: DSwitch
+      portgroup_name: dpg_prod
+      network:
+        type: 'static'
+        ip_address: '{{ item.ip }}'
+        subnet_mask: 255.255.255.0
+      state: present
+      enable_mgmt: true
+    with_items:
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}",ip: "{{ '10.10.13.11' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",ip: "{{ '10.10.13.12' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}",ip: "{{ '10.10.13.13' }}" } 
+    delegate_to: localhost
+
+  - name: Add vmkernel port to Distributed Switch vsan
+    community.vmware.vmware_vmkernel:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: no
+      esxi_hostname: '{{ item.hostname }}'
+      dvswitch_name: DSwitch
+      portgroup_name: dpg_vsan
+      network:
+        type: 'static'
+        ip_address: '{{ item.ip }}'
+        subnet_mask: 255.255.255.0
+      state: present
+      enable_mgmt: true
+    with_items:
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}",ip: "{{ '10.10.100.11' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",ip: "{{ '10.10.100.12' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}",ip: "{{ '10.10.100.13' }}" } 
+    delegate_to: localhost
