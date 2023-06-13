@@ -193,6 +193,7 @@
         subnet_mask: 255.255.255.0
         tcpip_stack: vmotion
       state: present
+      enable_vmotion: true
     with_items:
     - {hostname: "{{ 'sa-esxi-04.vclass.local' }}",ip: "{{ '10.10.12.11' }}" }
     - {hostname: "{{ 'sa-esxi-05.vclass.local' }}",ip: "{{ '10.10.12.12' }}" }
