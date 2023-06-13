@@ -1,0 +1,67 @@
+# https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_host_iscsi_module.html#ansible-collections-community-vmware-vmware-host-iscsi-module
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks:
+  - name: Enable iSCSI of ESXi
+    community.vmware.vmware_host_iscsi:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: 'false'
+      esxi_hostname: '{{ item.hostname }}'
+      state: enabled
+    with_items:
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" }
+    delegate_to: localhost
+
+  - name: Add a dynamic target to iSCSI config of ESXi
+    community.vmware.vmware_host_iscsi:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: 'false'
+      esxi_hostname: '{{ item.hostname }}'
+      iscsi_config:
+        vmhba_name: vmhba65
+        send_target:
+          address: 10.10.10.2
+      state: present
+    with_items:
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" }
+    delegate_to: localhost
+
+  - name: Add VMKernels to iSCSI config of ESXi
+    community.vmware.vmware_host_iscsi:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: 'false'
+      esxi_hostname: '{{ item.hostname }}'
+      iscsi_config:
+        vmhba_name: vmhba65
+        port_bind:
+          - vmk1
+      state: present
+    with_items:
+    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}" }
+    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" }
+    delegate_to: localhost
+
+  # - name: Remove a dynamic target from iSCSI config of ESXi
+  #   community.vmware.vmware_host_iscsi:
+  #     hostname: "{{ vcenter_hostname }}"
+  #     username: "{{ vcenter_username }}"
+  #     password: "{{ vcenter_password }}"
+  #     esxi_hostname: "{{ esxi_hostname }}"
+  #     iscsi_config:
+  #       vmhba_name: vmhba65
+  #       send_target:
+  #         address: "{{ send_target_address }}"
+  #     state: absent
