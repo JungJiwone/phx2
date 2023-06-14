@@ -1,0 +1,24 @@
+# kubectl get pod -n project 입력 후 IP 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-deployment
+  labels:
+    app: tomcat
+  namespace: phx
+spec:
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      containers:
+      - name: tomcat
+        image: bchwang/tomcat_mariadb:tomcat
+        ports:
+        - containerPort: 8080
+          name: tomcat
