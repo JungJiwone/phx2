@@ -36,21 +36,21 @@
     - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" }
     delegate_to: localhost
 
-  - name: Configure VMkernel NIC
-    community.vmware.vmware_host_vmkernel:
-      hostname: '{{ my_vcenter_hostname }}'
-      username: '{{ my_vcenter_username }}'
-      password: '{{ my_vcenter_password }}'
-      validate_certs: 'false'
-      esxi_hostname: '{{ item.hostname }}'
-      vmkernel_name: vmk1  # VMkernel NIC의 vmhba 이름
-      nic_device: vmnic2  # 사용할 물리적 NIC의 장치 이름
-      force: true
-    with_items:
-    - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
-    - {hostname: "{{ 'sa-esxi-05.vclass.local' }}" }
-    - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" }
-    delegate_to: localhost
+  # - name: Configure VMkernel NIC
+  #   community.vmware.vmware_host_vmkernel:
+  #     hostname: '{{ my_vcenter_hostname }}'
+  #     username: '{{ my_vcenter_username }}'
+  #     password: '{{ my_vcenter_password }}'
+  #     validate_certs: 'false'
+  #     esxi_hostname: '{{ item.hostname }}'
+  #     vmkernel_name: vmk1  # VMkernel NIC의 vmhba 이름
+  #     nic_device: vmnic2  # 사용할 물리적 NIC의 장치 이름
+  #     force: true
+  #   with_items:
+  #   - {hostname: "{{ 'sa-esxi-04.vclass.local' }}" }
+  #   - {hostname: "{{ 'sa-esxi-05.vclass.local' }}" }
+  #   - {hostname: "{{ 'sa-esxi-06.vclass.local' }}" }
+  #   delegate_to: localhost
 
   - name: Add VMKernels to iSCSI config of ESXi
     community.vmware.vmware_host_iscsi:
