@@ -13,3 +13,21 @@ Step4. Docker Hub 이미지 업로드
 
 Step5. Docker Hub 에 등록된 이미지 확인
   • Docker Hub 에 개인 개정으로 로그인 후 Docker Image 및 Tag 확인
+  
+  ------------------------------------------------------------------------------------
+  
+  Step1. docker loign 
+
+Step2. 작성 한 DockerFile 에서 빌드 하기
+  • docker build -t tomcat_mariadb:nginx_tomcat .
+  • docker images ## 로컬에 저장된 Docker Images 확인
+
+Step3. 로컬에 만든 이미지 실행 및 확인
+  • docker run –d –p 80:80 tomcat_mariadb: nginx_tomcat 
+
+Step4. Docker Hub 이미지 업로드
+  • docker tag tomcat_mariadb:nginx_tomcat bchwang/tomcat_mariadb:nginx_tomcat 
+  • docker push bchwang/tomcat_mariadb: nginx_tomcat 
+
+Step5. Docker Hub 에 등록된 이미지 확인
+  • Docker Hub 에 개인 개정으로 로그인 후 Docker Image 및 Tag 확인
