@@ -1,0 +1,31 @@
+##  hostAliases 의 ip 정보가 mariadb 의 IP 정보 : kubectl get pod -n project 나온 IP 값을 입력하기
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-tomcat
+  labels:
+    app: nginx-tomcat
+  namespace: p
+spec:
+  replicas: 10      # 개수 확인
+  selector:
+    matchLabels:
+      app: nginx-tomcat
+  template:
+    metadata:
+      labels:
+        app: nginx-tomcat
+      name: nginx-tomcat
+    spec:
+      hostname: nginx-tomcat
+      hostAliases:
+      - ip: "10.100.4.9" ### mariadb hosts 지정
+        hostnames:      # hostname 확인!!!
+        - "mariadb"
+      containers:
+      - name: nginx-tomcat
+        image: bchwang/tomcat_mariadb:nginx_tomcat
+        ports:
+        - containerPort: 80
+          name: nginx-tomcat
