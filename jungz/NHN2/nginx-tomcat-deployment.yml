@@ -6,7 +6,7 @@ metadata:
   name: nginx-tomcat
   labels:
     app: nginx-tomcat
-  namespace: p
+  namespace: phx
 spec:
   replicas: 10      # 개수 확인
   selector:
