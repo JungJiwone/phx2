@@ -1,0 +1,10 @@
+# 이미지 만들기
+sudo docker build -t 이미지이름:버전
+
+# 이미지 확인
+sudo docker images
+
+# 이미지 실행 : 실행하였다면 war 파일이 제대로 배포되어있는 것을 확인
+sudo docker run 이미지명:버전
+sudo docker run -p 80:1111 이미지명:버전
+
