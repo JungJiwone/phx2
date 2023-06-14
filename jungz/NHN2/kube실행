@@ -1,0 +1,22 @@
+### mariadb 및 서비스 실행   
+$ kubectl apply -f 1.kubernetes_mariadb+service.yaml
+
+### Mariadb Pod 실행 및 IP 정보 확인     
+$ kubectl get pod -n project -o wide
+NAME                                        READY     STATUS    RESTARTS   AGE          IP            NODE       NOMINATED NODE   READINESS GATES
+mariadb-service-59868b7dd6-xb8tq            1/1       Running   0          1m           10.100.4.9    kubernetes   <none>           <none>
+
+### ip 입력 후 nginx & tomcat 실행    
+kubectl apply -f 2.kubernetes_nginx+tomcat.yaml
+
+### Pod 실행 및 IP 정보 확인     
+$ kubectl get pod -n project -o wide
+NAME                                        READY     STATUS    RESTARTS   AGE          IP            NODE       NOMINATED NODE   READINESS GATES
+mariadb-service-59868b7dd6-xb8tq            1/1       Running   0          1m           10.100.4.9    kubernetes   <none>           <none>
+nginx_tomcat-service-59868b7dd6-xb8tq       1/1       Running   0          1m           10.100.4.10   kubernetes   <none>           <none>
+
+### Service 정보 확인     
+$ kubectl get service -n project -o wide
+NAMESPACE              NAME                            TYPE         CLUSTER-IP      EXTERNAL-IP   PORT(S)                  AGE     SELECTOR
+nginx_tomcat           nginx_tomcat                    LoadBalancer 133.186.216.107 <none>        80/TCP                   8m4s    app=nginx_tomcat
+mariadb                mariadb                         ClusterIP    <none>          <none>        3306/TCP                 18m4s   app=mariadb
