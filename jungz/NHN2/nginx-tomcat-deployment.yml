@@ -1,4 +1,5 @@
 ##  hostAliases 의 ip 정보가 mariadb 의 IP 정보 : kubectl get pod -n project 나온 IP 값을 입력하기
+## nginx, tomcat 분리
 
 apiVersion: apps/v1
 kind: Deployment
