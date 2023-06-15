@@ -1,0 +1,29 @@
+FROM mysql:latest
+
+###### MySQL 구성을 위한 환경 변수 설정
+ENV MYSQL_ROOT_PASSWORD=mysecretpassword
+ENV MYSQL_DATABASE=mydatabase
+
+###### 포트 노출 (선택 사항)
+EXPOSE 3306
+
+----
+
+FROM php:latest
+
+###### 추가적인 필요한 PHP 확장기능을 설치할 수 있습니다.
+RUN docker-php-ext-install mysqli pdo_mysql
+
+###### 포트 노출 (선택 사항)
+EXPOSE 80
+
+----
+
+FROM httpd:latest
+
+###### 추가적인 필요한 Apache 설정 파일이나 모듈을 설치할 수 있습니다.
+RUN apt-get update && apt-get install -y \
+    [추가 패키지 이름]
+
+###### 포트 노출 (선택 사항)
+EXPOSE 80
