@@ -18,7 +18,8 @@ ENV MYSQL_DATABASE=phx
 ###### MySQL 구성 파일 복사
 COPY my.cnf /etc/mysql/my.cnf
 
-###### 초기 데이터베이스 스크립트 복사
+###### 초기 데이터베이스 스크립트 복사, 초기 데이터베이스 스크립트를 dockerfile에 포함시켜 db container 자동으로 초기화
+###### 초기화 스크립트 복사하는 명령어
 COPY init.sql /docker-entrypoint-initdb.d/
 
 ###### 포트 노출 (선택 사항)
