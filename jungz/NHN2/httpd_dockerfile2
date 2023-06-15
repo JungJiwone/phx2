@@ -1,0 +1,29 @@
+FROM ubuntu:20.04
+
+RUN apt-get update && apt-get install -y apache2
+
+COPY apache2.conf /etc/apache2/apache2.conf
+
+COPY src/ /var/www/html/
+
+EXPOSE 80
+
+CMD ["apache2ctl", "-D", "FOREGROUND"]
+
+----------------------------------------------------------------
+FROM ubuntu:20.04
+
+# 패키지 업데이트 및 Apache 설치
+RUN apt-get update && apt-get install -y apache2
+
+# Apache 구성 파일 복사
+COPY apache2.conf /etc/apache2/apache2.conf
+
+# 웹 애플리케이션 소스 코드를 복사
+COPY src/ /var/www/html/
+
+# 포트 노출
+EXPOSE 80
+
+# 컨테이너 시작 시 Apache 실행
+CMD ["apache2ctl", "-D", "FOREGROUND"]
