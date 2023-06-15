@@ -1,7 +1,7 @@
 FROM httpd:latest
 
 RUN apt-get update && apt-get install -y \
-    [추가 패키지 이름]
+    php-curl
 
 COPY httpd.conf /usr/local/apache2/conf/httpd.conf
 
@@ -17,8 +17,9 @@ CMD ["httpd-foreground"]
 FROM httpd:latest
 
 ###### 추가적인 필요한 Apache 설정 파일이나 모듈을 설치할 수 있습니다.
+###### php-curl: cURL 라이브러리를 PHP에서 사용할 수 있게 해줍니다. HTTP 요청 전송, 데이터 수신, API 호출 등에 사용됩니다.
 RUN apt-get update && apt-get install -y \
-    [추가 패키지 이름]
+    php-curl
 
 ###### Apache 구성 파일 복사
 COPY httpd.conf /usr/local/apache2/conf/httpd.conf
