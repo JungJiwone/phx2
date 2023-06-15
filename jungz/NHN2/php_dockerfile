@@ -1,0 +1,26 @@
+FROM php:latest
+
+RUN docker-php-ext-install mysqli pdo_mysql
+
+COPY src/ /var/www/html/
+
+EXPOSE 80
+
+CMD ["apache2-foreground"]
+
+----------------------------------------------------------------
+FROM php:latest
+
+###### 추가적인 필요한 PHP 확장기능을 설치할 수 있습니다.
+###### mysqli : mysql 데이터베이스와의 연결 및 작업을 지원
+###### pdo_mysql : php data objects(PDO) 인터페이스를 사용하여 mysql 데이터베이스와 상호작용하기 위한 확장 기능 / db에 접속 및 쿼리 실행
+RUN docker-php-ext-install mysqli pdo_mysql
+
+###### 웹 애플리케이션 소스 코드를 복사
+COPY src/ /var/www/html/
+
+###### 포트 노출 (선택 사항)
+EXPOSE 80
+
+###### 컨테이너 시작 시 Apache 서버 실행
+CMD ["apache2-foreground"]
