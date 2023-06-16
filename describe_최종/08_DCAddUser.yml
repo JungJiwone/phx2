@@ -1,0 +1,56 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_guest_file_operation_module.html#ansible-collections-community-vmware-vmware-guest-file-operation-module 
+
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks: 
+    - name: Copy powershell script to VM # 가상 머신에 powershell script를 복사, task로 하나씩 등록하기 번잡하므로! 
+      community.vmware.vmware_guest_file_operation:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: "{{ student_ID + '-DC' }}" #가상머신을 이름으로 찾아감 
+        vm_id_type: vm_name
+        vm_username: 'Administrator'
+        vm_password: 'VMware1!'
+        copy:
+            src: "/mnt/c/Material/08-1.ps1"
+            dest: "c:\\Material\\08-1.ps1"
+            overwrite: true
+      delegate_to: localhost
+
+
+    - name: Run dns powershell script
+      community.vmware.vmware_vm_shell:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: "{{ student_ID + '-DC' }}"
+        vm_id_type: vm_name
+        vm_username: 'Administrator'
+        vm_password: 'VMware1!'
+        vm_shell: 'c:\windows\system32\windowspowershell\v1.0\powershell.exe'
+        vm_shell_args: '-command "(c:\Material\08-1.ps1)"' # powershell sript 실행해라 
+        vm_shell_cwd: 'c:\Users\Administrator' #가상 머신(VM)에서 실행되는 셸(Shell)의 현재 작업 디렉토리(Working Directory)를 나타내는 변수 
+        wait_for_process: True
+        timeout: 60
+      delegate_to: localhost
+
+    - name: Delete copied powershell script #실행한 powershell script 삭제 
+      community.vmware.vmware_vm_shell:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: "{{ student_ID + '-DC' }}"
+        vm_id_type: vm_name
+        vm_username: 'Administrator'
+        vm_password: 'VMware1!'
+        vm_shell: 'c:\windows\system32\windowspowershell\v1.0\powershell.exe'
+        vm_shell_args: '-command "(Remove-Item -path c:\Material\08-1.ps1)"'
+        vm_shell_cwd: 'c:\Users\Administrator'
+        wait_for_process: True
+      delegate_to: localhost
