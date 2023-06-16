@@ -1,0 +1,15 @@
+FROM mariadb:latest
+
+ENV MYSQL_ROOT_PASSWORD=1234
+ENV MYSQL_DATABASE=WebTest
+
+CMD ["/bin/bash"]
+
+RUN apt-get update && apt-get install -y mysql-client
+
+#RUN echo "" > /etc/mysql/my.cnf
+COPY my.cnf /etc/mysql/my.cnf
+COPY db.sql /docker-entrypoint-initdb.d/db.sql
+COPY webtest_DB.sql /docker-entrypoint-initdb.d/webtest_DB.sql
+
+EXPOSE 3306
