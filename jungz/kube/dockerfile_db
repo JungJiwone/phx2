@@ -13,3 +13,33 @@ COPY db.sql /docker-entrypoint-initdb.d/db.sql
 COPY webtest_DB.sql /docker-entrypoint-initdb.d/webtest_DB.sql
 
 EXPOSE 3306
+
+------------------
+root@k8s-master:~/dockerfile# vi dockerfile_db
+FROM mariadb:latest
+
+ENV MYSQL_ROOT_PASSWORD=1234
+ENV MYSQL_DATABASE=WebTest
+
+#CMD ["/bin/bash"]
+
+RUN apt-get update && apt-get install -y mysql-client
+
+#RUN echo "" > /etc/mysql/my.cnf
+COPY my.cnf /etc/mysql/my.cnf
+COPY db.sql /docker-entrypoint-initdb.d/db.sql
+COPY webtest_DB.sql /docker-entrypoint-initdb.d/webtest_DB.sql
+
+EXPOSE 3306
+~
+
+
+
+도커파일에 있는 3개 파일 퍼미션
+각 위치에 있는 3개 파일 퍼미션
+
+systemctl restart mysql
+
+docker container run --name mydb_phx -d -p 3306:3306 --restart=always mydb:phx
+
+docker container exec -it mydb_phx /bin/bash
