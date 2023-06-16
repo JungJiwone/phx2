@@ -1,0 +1,46 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_guest_module.html#parameter-customization/joindomain
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/docsite/vmware_scenarios/scenario_clone_template.html
+## timezone index values - https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms912391(v=winembedded.11)
+
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks: 
+    - name: Clone a virtual machine from Windows template and customize
+      community.vmware.vmware_guest:
+        hostname: "{{ vcenter_hostname }}"  # 200.200.200.251
+        username: "{{ vcenter_username }}"  # S00@vclass.local
+        password: "{{ vcenter_password }}"  # VMware1!
+        validate_certs: 'false'
+        datacenter: "{{ datacenter_name }}"
+        datastore: "{{ datastore_name }}"
+        folder: '{{ folder_prefix + student_ID }}'
+        template: "{{ student_ID + '-Win2022-Template'}}"
+        name: "{{ student_ID + '-DC' }}"
+        state: poweredon
+        esxi_hostname: "{{ esxi_hostname }}"  # 200.200.200.246
+        disk:
+        - size_gb: 90
+          type: thin
+          datastore: "{{ datastore_name }}"
+        - size_gb: 100
+          type: thin
+          datastore: "{{ datastore_name }}"
+        hardware:
+          memory_mb: 4096
+          num_cpus: 2
+        networks:
+        - name: "{{ student_ID + '-Mgmt' }}"  # PHX-Mgmt 포트 그룹에 연결
+          type: static
+          ip: 20.20.20.2
+          netmask: 255.255.255.0
+          gateway: 20.20.20.1
+          device_type: vmxnet3
+        customization:
+          dns_servers:
+            - 200.200.200.245
+          password: "VMware1!"
+          timezone: 230
+          joinworkgroup: 'WORKGROUP'
+      delegate_to: localhost
