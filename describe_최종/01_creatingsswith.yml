@@ -1,0 +1,85 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_vswitch_module.html#ansible-collections-community-vmware-vmware-vswitch-module 
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_portgroup_module.html 
+
+---
+- hosts: localhost   # sdk가 나한테 설치되었기 때문에 나 자신한테 돌린 것(hosts로 지정) 
+  vars_files: ./vars.yml # (계속 사용할)변수 목록이 저장된 파일 
+
+  tasks: 
+    - name: Create Lab Standard Switch #스위치 만드는 작업 
+      community.vmware.vmware_vswitch: #이 모듈을 사용할 것 
+        hostname: '{{ esxi_hostname }}' #vars.yaml에 있는 변수 
+        username: '{{ esxi_username }}'
+        password: '{{ esxi_password }}'
+        validate_certs: no #인증서 검증하지마 
+        switch: '{{ student_ID }}' #CLI에서만 허락되는 스위치 이름 
+        security: #보안적으론 금지되어있지만 다 풀어주는 것 
+          promiscuous_mode: true
+          mac_changes: True
+          forged_transmits: True          
+      delegate_to: localhost #이 작업을 sdk가 설치된 나한테 위임하다 
+
+    - name: Waiting 10 seconds for completing switch # 10초 정도 기다렸다가 다음 작업 
+      wait_for:
+        timeout: 10
+      delegate_to: localhost
+
+    - name: Adding Trunk Portgroup #스위치 포트그룹 선언, 트렁크 포트 그룹 
+      community.vmware.vmware_portgroup: 
+        hostname: "{{ vcenter_hostname }}" #이거를 만들어줘 
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        esxi_hostname: "{{ esxi_hostname }}"
+        validate_certs: no
+        switch: "{{ student_ID }}"
+        portgroup: "{{ student_ID + '-Trunk' }}" #이런 포트그룹을 만들어라 
+        vlan_id: 4095 #vlan id, 모든 vlan id를 알고있는 vlan포트 
+      delegate_to: localhost
+
+    - name: Adding PHX Management Portgroup #vlan 20 포트 그룹 생성 
+      community.vmware.vmware_portgroup:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        esxi_hostname: "{{ esxi_hostname }}"
+        validate_certs: no
+        switch: "{{ student_ID }}"
+        portgroup: "{{ student_ID + '-Mgmt' }}"
+        vlan_id: 20
+      delegate_to: localhost
+
+    - name: Adding PHX Storage Portgroup #vlan 30 포트 그룹 생성 
+      community.vmware.vmware_portgroup:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        esxi_hostname: "{{ esxi_hostname }}"
+        validate_certs: no
+        switch: "{{ student_ID }}"
+        portgroup: "{{ student_ID + '-Storage' }}"
+        vlan_id: 30
+      delegate_to: localhost
+
+    - name: Adding PHX vMotion Portgroup #vlan 40 포트 그룹 생성 
+      community.vmware.vmware_portgroup:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        esxi_hostname: "{{ esxi_hostname }}"
+        validate_certs: no
+        switch: "{{ student_ID }}"
+        portgroup: "{{ student_ID + '-vMotion' }}"
+        vlan_id: 40
+      delegate_to: localhost
+
+    - name: Adding PHX Production Portgroup #vlan 50 포트 그룹 생성 
+      community.vmware.vmware_portgroup:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        esxi_hostname: "{{ esxi_hostname }}"
+        validate_certs: no
+        switch: "{{ student_ID }}"
+        portgroup: "{{ student_ID + '-Prod' }}"
+        vlan_id: 50
+      delegate_to: localhost
