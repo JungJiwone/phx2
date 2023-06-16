@@ -1,0 +1,42 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_guest_module.html
+
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks: 
+    - name: Create Windows Template VM
+      community.vmware.vmware_guest:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: 'false'
+        datacenter: '{{datacenter_name}}'
+        folder: '{{ folder_prefix + student_ID }}'
+        name: '{{ item.vmname }}' # 가상머신 이름
+        state: poweredon # vm 실행
+        guest_id: '{{ item.guest_id }}' # vm os = windows2019srvNext_64Guest = w2019 다음 버전
+        esxi_hostname: "{{ esxi_hostname }}" # 물리서버
+        hardware:
+          num_cpus: '{{ item.cpus }}'
+          hotadd_cpu: true          # vm 가동 중에 cpu 추가, numa 구조 해칠 수 있음
+          memory_mb: '{{ item.memory }}'
+          hotadd_memory: true # vm 운영 중에 mem 추가, numa 구조 안해침
+          scsi: paravirtual
+        disk:
+        - size_gb: '{{ item.disk_gb }}'
+          type: thin
+          datastore: '{{ datastore_name }}'
+        networks:
+        - name: '{{ public_net }}'
+          device_type: vmxnet3
+        cdrom:
+        - controller_number: 0
+          unit_number: 0
+          state: present
+          type: iso
+          iso_path: '{{ "[" + datastore_name + "]\ISO\ko-kr_windows_server_2022_updated_april_2023_x64_dvd_54c81ef3.iso" }}'
+      with_items:
+      - { vmname: "{{ student_ID + '-Win2022-Template'}}", guest_id: windows2019srvNext_64Guest, cpus: 2, memory: 4096,  disk_gb: 90 }
+      delegate_to: localhost
+      register: deploy_vm
