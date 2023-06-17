@@ -11,9 +11,9 @@ vswitch_name="vSwitch0"
 esxcfg-vswitch -L "vmnic1" "vSwitch0"
 
 # Configure the IP address, netmask, default gateway, dns server for the management network
-esxcli network ip interface ipv4 set -i vmk0 -t static -g 20.20.20.1 -I 20.20.20.12 -N 255.255.255.0
+esxcli network ip interface ipv4 set -i vmk0 -t static -g 20.20.20.1 -I 20.20.20.13 -N 255.255.255.0
 esxcli network ip dns server add --server="20.20.20.2"
-esxcli system hostname set --host="PHX-ESXi-02"
+esxcli system hostname set --host="PHX-ESXi-03"
 esxcli system hostname --domain="vclass.phoenix"
 
 # restart management network
