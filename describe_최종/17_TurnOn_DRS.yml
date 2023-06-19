@@ -1,0 +1,19 @@
+# https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_cluster_drs_module.html#ansible-collections-community-vmware-vmware-cluster-drs-module
+
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks: 
+  - name: Enable DRS and distribute a more even number of virtual machines across hosts for availability
+    community.vmware.vmware_cluster_drs:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: no
+      datacenter: '{{ my_datacenter_name }}'
+      cluster_name: PHX-Cluster
+      enable: true
+      advanced_settings:
+        'TryBalanceVmsPerHost': '1'
+    delegate_to: localhost
