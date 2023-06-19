@@ -41,9 +41,9 @@
           - vmnic3
       state: present
     with_items:
-    - {hostname: "{{ 'PHX-ESXi-01.vclass.phoenix' }}" }
-    - {hostname: "{{ 'PHX-ESXi-02.vclass.phoenix' }}" }
-    - {hostname: "{{ 'PHX-ESXi-03.vclass.phoenix' }}" } 
+    - {hostname: "{{ 'phx-esxi-01.vclass.phoenix' }}" }
+    - {hostname: "{{ 'phx-esxi-02.vclass.phoenix' }}" }
+    - {hostname: "{{ 'phx-esxi-03.vclass.phoenix' }}" } 
     delegate_to: localhost
 
   - name: Adding vlan vsan portgroup to DSwtich
@@ -118,9 +118,9 @@
         default_gateway: 20.20.30.1
       state: present
     with_items:
-    - {hostname: "{{ 'PHX-ESXi-01.vclass.phoenix' }}",ip: "{{ '20.20.30.11' }}" }
-    - {hostname: "{{ 'PHX-ESXi-02.vclass.phoenix' }}",ip: "{{ '20.20.30.12' }}" }
-    - {hostname: "{{ 'PHX-ESXi-03.vclass.phoenix' }}",ip: "{{ '20.20.30.13' }}" } 
+    - {hostname: "{{ 'phx-esxi-01.vclass.phoenix' }}",ip: "{{ '20.20.30.11' }}" }
+    - {hostname: "{{ 'phx-esxi-02.vclass.phoenix' }}",ip: "{{ '20.20.30.12' }}" }
+    - {hostname: "{{ 'phx-esxi-03.vclass.phoenix' }}",ip: "{{ '20.20.30.13' }}" } 
     delegate_to: localhost
   
   - name: Add vMotion vmkernel port with vMotion TCP/IP stack
@@ -141,9 +141,9 @@
       state: present
       enable_vmotion: true
     with_items:
-    - {hostname: "{{ 'PHX-ESXi-01.vclass.phoenix' }}",ip: "{{ '20.20.40.11' }}" }
-    - {hostname: "{{ 'PHX-ESXi-02.vclass.phoenix' }}",ip: "{{ '20.20.40.12' }}" }
-    - {hostname: "{{ 'PHX-ESXi-03.vclass.phoenix' }}",ip: "{{ '20.20.40.13' }}" } 
+    - {hostname: "{{ 'phx-esxi-01.vclass.phoenix' }}",ip: "{{ '20.20.40.11' }}" }
+    - {hostname: "{{ 'phx-esxi-02.vclass.phoenix' }}",ip: "{{ '20.20.40.12' }}" }
+    - {hostname: "{{ 'phx-esxi-03.vclass.phoenix' }}",ip: "{{ '20.20.40.13' }}" } 
     delegate_to: localhost
 
   - name: Add vmkernel port to Distributed Switch vsan
@@ -163,7 +163,7 @@
       state: present
       enable_vsan: true
     with_items:
-    - {hostname: "{{ 'PHX-ESXi-01.vclass.phoenix' }}",ip: "{{ '20.20.200.11' }}" }
-    - {hostname: "{{ 'PHX-ESXi-02.vclass.phoenix' }}",ip: "{{ '20.20.200.12' }}" }
-    - {hostname: "{{ 'PHX-ESXi-03.vclass.phoenix' }}",ip: "{{ '20.20.200.13' }}" } 
+    - {hostname: "{{ 'phx-esxi-01.vclass.phoenix' }}",ip: "{{ '20.20.200.11' }}" }
+    - {hostname: "{{ 'phx-esxi-02.vclass.phoenix' }}",ip: "{{ '20.20.200.12' }}" }
+    - {hostname: "{{ 'phx-esxi-03.vclass.phoenix' }}",ip: "{{ '20.20.200.13' }}" } 
     delegate_to: localhost
