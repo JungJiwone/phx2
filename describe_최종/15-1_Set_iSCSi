@@ -13,7 +13,7 @@ $diskpath = $driveletter + ":\iSCSIDisk\phx-LUN0.vhdx"
 $disksize = 100GB
 
 # create iSCSI Target
-New-IscsiServerTarget -TargetName $targetname -InitiatorId @("IPAddress:20.20.20.11","IPAddress:20.20.20.12","IPAddress:20.20.20.13")
+New-IscsiServerTarget -TargetName $targetname -InitiatorId @("IPAddress:20.20.30.11","IPAddress:20.20.30.12","IPAddress:20.20.30.13")
 
 # create iSCSI virtual disk
 New-IscsiVirtualDisk -Path $diskpath -SizeBytes $disksize 
