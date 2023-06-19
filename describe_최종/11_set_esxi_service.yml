@@ -16,9 +16,9 @@
       service_name: ntpd
       state: present
     with_items:
-    - {hostname: "{{ 'PHX-ESXi-01.vclass.phoenix' }}" }
-    - {hostname: "{{ 'PHX-ESXi-02.vclass.phoenix' }}" }
-    - {hostname: "{{ 'PHX-ESXi-03.vclass.phoenix' }}" } 
+    - {hostname: "{{ 'phx-esxi-01.vclass.phoenix' }}" }
+    - {hostname: "{{ 'phx-esxi-02.vclass.phoenix' }}" }
+    - {hostname: "{{ 'phx-esxi-03.vclass.phoenix' }}" } 
     delegate_to: localhost
 
   - name: Set NTP servers for an ESXi Host
@@ -32,9 +32,9 @@
       ntp_servers:
         - 20.20.20.1
     with_items:
-    - {hostname: "{{ 'PHX-ESXi-01.vclass.phoenix' }}" }
-    - {hostname: "{{ 'PHX-ESXi-02.vclass.phoenix' }}" }
-    - {hostname: "{{ 'PHX-ESXi-03.vclass.phoenix' }}" } 
+    - {hostname: "{{ 'phx-esxi-01.vclass.phoenix' }}" }
+    - {hostname: "{{ 'phx-esxi-02.vclass.phoenix' }}" }
+    - {hostname: "{{ 'phx-esxi-03.vclass.phoenix' }}" } 
     delegate_to: localhost
 
   - name: Start SSH Service
@@ -47,9 +47,9 @@
       service_name: TSM-SSH
       state: start
     with_items:
-    - {hostname: "{{ 'PHX-ESXi-01.vclass.phoenix' }}" }
-    - {hostname: "{{ 'PHX-ESXi-02.vclass.phoenix' }}" }
-    - {hostname: "{{ 'PHX-ESXi-03.vclass.phoenix' }}" } 
+    - {hostname: "{{ 'phx-esxi-01.vclass.phoenix' }}" }
+    - {hostname: "{{ 'phx-esxi-02.vclass.phoenix' }}" }
+    - {hostname: "{{ 'phx-esxi-03.vclass.phoenix' }}" } 
     delegate_to: localhost
 
   - name: Start Shell
@@ -62,9 +62,9 @@
       service_name: TSM
       state: start
     with_items:
-    - {hostname: "{{ 'PHX-ESXi-01.vclass.phoenix' }}" }
-    - {hostname: "{{ 'PHX-ESXi-02.vclass.phoenix' }}" }
-    - {hostname: "{{ 'PHX-ESXi-03.vclass.phoenix' }}" } 
+    - {hostname: "{{ 'phx-esxi-01.vclass.phoenix' }}" }
+    - {hostname: "{{ 'phx-esxi-02.vclass.phoenix' }}" }
+    - {hostname: "{{ 'phx-esxi-03.vclass.phoenix' }}" } 
     delegate_to: localhost
 
   # - name: Stop ntpd setting for an ESXi Host
