@@ -1,0 +1,45 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_guest_module.html
+
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks: 
+    - name: Create a virtual machine
+      community.vmware.vmware_guest:
+        hostname: '{{ my_vcenter_hostname }}'
+        username: '{{ my_vcenter_username }}'
+        password: '{{ my_vcenter_password }}'
+        validate_certs: 'false'
+        folder: "/"
+        datacenter: '{{ my_datacenter_name }}'
+        cluster: '{{ my_cluster_name }}'
+        name: "k8s-master"
+        state: poweredon
+        guest_id: ubuntu64Guest
+        disk:
+        - size_gb: 16
+          type: thick
+          datastore: iSCSI-DC
+        hardware:
+          memory_mb: 4096
+          num_cpus: 2
+          hotadd_memory: true
+          hotadd_cpu: true
+        networks:
+        - name: "DPG_prod"
+          type: static
+          ip: 20.20.50.2
+          netmask: 255.255.255.0 
+          gateway: 20.20.50.1
+          dns_servers: 20.20.20.2
+          device_type: vmxnet3
+          start_connected: true
+        cdrom:
+        - controller_number: 0
+          unit_number: 0
+          state: present
+          type: iso
+          iso_path: "[nfs] ubuntu-20.04.4-desktop-amd64.iso" 
+      delegate_to: localhost
+      register: deploy
