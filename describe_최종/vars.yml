@@ -6,11 +6,15 @@ vcenter_hostname: "200.200.200.251"
 vcenter_username: "S11@vclass.kh"
 vcenter_password: "VMware1!"
 
-my_vcenter_hostname: "20.20.20.20"
+#my_vcenter_hostname: "20.20.20.20"
+my_vcenter_hostname: "phx-vcsa.vclass.phoenix"
 my_vcenter_username: "administrator@vsphere.phoenix"
 my_vcenter_password: "VMware1!"
 
 datacenter_name: "Datacenter"
+my_datacenter_name: "PHX"
+
+my_cluster_name: "PHX-Cluster"
 
 folder_prefix: "Datacenter/vm/3.Students/"
 
@@ -28,6 +32,8 @@ public_net: "VM-200.200.200.x"
 private_net: "{{ student_ID + '-Trunk' }}"
 
 datastore_name: "Local-01"
+
+my_vcenter_datastore: "iSCSI-DC"
 
 
 dc_template_name: "Temp-WinSvr2022-ESXi-05"
