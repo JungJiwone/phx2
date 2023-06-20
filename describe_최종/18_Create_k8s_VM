@@ -12,7 +12,7 @@
         password: '{{ my_vcenter_password }}'  # VMware1!
         validate_certs: 'false'
         folder: "/"
-        datacenter: "{{ my_datacenter_name }}"
+        datacenter: "{{ my_datacenter_name }}" # iSCSI-DC
         name: "k8s-master"
         state: poweredon
         guest_id: ubuntu64Guest
