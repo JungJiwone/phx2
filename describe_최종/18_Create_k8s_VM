@@ -5,41 +5,33 @@
   vars_files: ./vars.yml
 
   tasks: 
-    - name: Create a virtual machine
+    - name: Create a virtual machine from Windows customize
       community.vmware.vmware_guest:
-        hostname: '{{ my_vcenter_hostname }}'
-        username: '{{ my_vcenter_username }}'
-        password: '{{ my_vcenter_password }}'
+        hostname: '{{ my_vcenter_hostname }}'  # 20.20.20.20
+        username: '{{ my_vcenter_username }}'  # administrator@vsphere.phoenix
+        password: '{{ my_vcenter_password }}'  # VMware1!
         validate_certs: 'false'
         folder: "/"
-        datacenter: '{{ my_datacenter_name }}'
-        cluster: '{{ my_cluster_name }}'
+        datacenter: "{{ my_datacenter_name }}"
         name: "k8s-master"
         state: poweredon
         guest_id: ubuntu64Guest
+        esxi_hostname: "phx-esxi-01.vclass.phoenix"   #"phx-esxi-03.vclass.phoenix"
         disk:
         - size_gb: 16
           type: thick
-          datastore: iSCSI-DC
+          datastore: "{{ my_vcenter_datastore }}"
         hardware:
           memory_mb: 4096
           num_cpus: 2
-          hotadd_memory: true
-          hotadd_cpu: true
         networks:
-        - name: "DPG_prod"
-          type: static
-          ip: 20.20.50.2
-          netmask: 255.255.255.0 
-          gateway: 20.20.50.1
-          dns_servers: 20.20.20.2
+        - name: "DPG_prod"  # PHX_mgmt 포트 그룹에 연결 
           device_type: vmxnet3
-          start_connected: true
         cdrom:
         - controller_number: 0
           unit_number: 0
           state: present
           type: iso
-          iso_path: "[nfs] ubuntu-20.04.4-desktop-amd64.iso" 
+          iso_path: "[iSCSI-DC] contentlib-94d87503-8c71-4c5b-a448-5aceb20c6f31"
       delegate_to: localhost
       register: deploy
