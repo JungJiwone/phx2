@@ -12,7 +12,7 @@
         password: '{{ my_vcenter_password }}'  # VMware1!
         validate_certs: 'false'
         folder: "/"
-        datacenter: "{{ my_datacenter_name }}" # iSCSI-DC
+        datacenter: "{{ my_datacenter_name }}"
         name: "k8s-master"
         state: poweredon
         guest_id: ubuntu64Guest
@@ -32,6 +32,6 @@
           unit_number: 0
           state: present
           type: iso
-          iso_path: "[iSCSI-DC] contentlib-94d87503-8c71-4c5b-a448-5aceb20c6f31"
+          iso_path: "[iSCSI-DC] contentlib-94d87503-8c71-4c5b-a448-5aceb20c6f31/79b37058-40b4-4daf-a209-c88230bc90f4/ubuntu-20.04.4-desktop-amd64_7225dc34-7059-4cdf-a038-a622dae1945f.iso"
       delegate_to: localhost
       register: deploy
