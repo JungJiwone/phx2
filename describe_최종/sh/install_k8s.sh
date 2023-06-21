@@ -6,8 +6,6 @@ sed -i '/swap/s/^/#/' /etc/fstab
 # firewall disable
 ufw disable
 
-apt -y update
-
 # lock prevent
 rm -rf /var/lib/dpkg/lock-frontend
 rm -rf /var/lib/dpkg/lock
@@ -38,7 +36,7 @@ systemctl restart kubelet
 # docker directory create
 mkdir /etc/docker
 
-cat <<EOF | tee /etc/docker/daemon.json
+cat << EOF | tee /etc/docker/daemon.json
 {
 "exec-opts": ["native.cgroupdriver=systemd"],
 "log-driver": "json-file",
