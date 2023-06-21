@@ -1,0 +1,123 @@
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_guest_file_operation_module.html#ansible-collections-community-vmware-vmware-guest-file-operation-module 
+## https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_vm_shell_module.html
+
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks: 
+    - name: Copy shell script to VM
+      community.vmware.vmware_guest_file_operation:
+        hostname: '{{ my_vcenter_hostname }}'
+        username: '{{ my_vcenter_username }}'
+        password: '{{ my_vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: '{{ item.vm }}'
+        vm_id_type: vm_name
+        vm_username: 'root'
+        vm_password: 'VMware1!'
+        copy:
+            src: '{{ item.src }}'
+            dest: "/home/phoenix/net_set.sh"
+            overwrite: true
+      with_items:
+      - {vm: "k8s-worker-01", src: "/mnt/c/Material/set_k8s_worker_01.sh" }
+      - {vm: "k8s-worker-02", src: "/mnt/c/Material/set_k8s_worker_02.sh" }
+      - {vm: "k8s-worker-03", src: "/mnt/c/Material/set_k8s_worker_03.sh" }
+      delegate_to: localhost
+
+    - name: Copy shell script to VM
+      community.vmware.vmware_guest_file_operation:
+        hostname: '{{ my_vcenter_hostname }}'
+        username: '{{ my_vcenter_username }}'
+        password: '{{ my_vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: '{{ item.vm }}'
+        vm_id_type: vm_name
+        vm_username: 'root'
+        vm_password: 'VMware1!'
+        copy:
+            src: '{{ item.src }}'
+            dest: "/home/phoenix/set_net.yml"
+            overwrite: true
+      with_items:
+      - {vm: "k8s-worker-01", src: "/mnt/c/Material/set_net_k8s_01.yml"}
+      - {vm: "k8s-worker-02", src: "/mnt/c/Material/set_net_k8s_02.yml"}
+      - {vm: "k8s-worker-03", src: "/mnt/c/Material/set_net_k8s_03.yml"}
+      delegate_to: localhost
+
+    - name: Execute shell script on k8s_worker
+      community.vmware.vmware_vm_shell:
+        hostname: '{{ my_vcenter_hostname }}'
+        username: '{{ my_vcenter_username }}'
+        password: '{{ my_vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: '{{ item.vm }}'
+        vm_id_type: vm_name
+        vm_username: 'root'
+        vm_password: 'VMware1!'
+        vm_shell: /usr/bin/bash
+        vm_shell_args: "/home/phoenix/net_set.sh"
+        wait_for_process: True
+        timeout: 120
+      with_items:
+      with_items:
+      - {vm: "k8s-worker-01" }
+      - {vm: "k8s-worker-02" }
+      - {vm: "k8s-worker-03" }
+      delegate_to: localhost
+
+    - name: Execute shell script on ESXi host
+      community.vmware.vmware_vm_shell:
+        hostname: '{{ my_vcenter_hostname }}'
+        username: '{{ my_vcenter_username }}'
+        password: '{{ my_vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: '{{ item.vm }}'
+        vm_id_type: vm_name
+        vm_username: 'root'
+        vm_password: 'VMware1!'
+        vm_shell: /usr/bin/bash
+        vm_shell_args: "-rf /home/phoenix/net_set.sh"
+        wait_for_process: True
+        timeout: 120
+      with_items:
+      - {vm: "k8s-worker-01" }
+      - {vm: "k8s-worker-02" }
+      - {vm: "k8s-worker-03" }
+      delegate_to: localhost
+
+    - name: Delete copied shell script #실행한 shell script 삭제 
+      community.vmware.vmware_vm_shell:
+        hostname: '{{ my_vcenter_hostname }}'
+        username: '{{ my_vcenter_username }}'
+        password: '{{ my_vcenter_password }}'
+        validate_certs: 'false'
+        vm_id: '{{ item.vm }}'
+        vm_id_type: vm_name
+        vm_username: 'root'
+        vm_password: 'VMware1!'
+        vm_shell: /usr/bin/rm
+        vm_shell_args: "-rf /home/phoenix/set_net.yml"
+        wait_for_process: True
+      with_items:
+      - {vm: "k8s-worker-01" }
+      - {vm: "k8s-worker-02" }
+      - {vm: "k8s-worker-03" }
+      delegate_to: localhost
+
+    - name: Set the state of a virtual machine to reboot
+      community.vmware.vmware_guest_powerstate:
+        hostname: '{{ my_vcenter_hostname }}'
+        username: '{{ my_vcenter_username }}'
+        password: '{{ my_vcenter_password }}'
+        validate_certs: 'false'
+        datacenter: TEST
+        name: '{{ item.vm }}'
+        state: reboot-guest
+      with_items:
+      - {vm: "k8s-worker-01" }
+      - {vm: "k8s-worker-02" }
+      - {vm: "k8s-worker-03" }
+      delegate_to: localhost
+      register: deploy
