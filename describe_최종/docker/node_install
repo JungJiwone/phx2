@@ -1,0 +1,12 @@
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/tigera-operator.yaml
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/custom-resources.yaml
+watch kubectl get pods -n calico-system
+
+Every 2.0s: kubectl get pods -n calico-system                                            k8s-master-00: Fri Jun  2 15:06:33 2023
+very 2.0s: kubectl get pods -n calico-system                                                                              k8s-master-00: Mon Jun  5 12:12:02 2023
+
+NAME                                       READY   STATUS    RESTARTS   AGE
+calico-kube-controllers-7f5d94d487-tplnf   1/1     Running   0          81s
+calico-node-dh5f4                          1/1     Running   0          82s
+calico-typha-7cfb94bccd-d5dsm              1/1     Running   0          82s
+csi-node-driver-qzg5f
