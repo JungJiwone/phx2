@@ -3,15 +3,19 @@
 cat /home/phoenix/set_net.yml > /etc/netplan/01-network-manager-all.yaml
 netplan apply
 
+rm -rf /var/lib/dpkg/lock-frontend
+rm -rf /var/lib/dpkg/lock
+
 # repository update
-sudo systemctl stop unattended-upgrades.service
+#sudo systemctl stop unattended-upgrades.service
 apt update -y
+apt upgrade -y
 
 # ssh server install
 apt install -y openssh-server
 
 # ifconfig command install
-apt install net-tools
+apt install -y net-tools
 
 # package install
 apt install -y ca-certificates curl gnupg lsb-release
@@ -30,6 +34,3 @@ echo "20.20.50.2 k8s-master" >> /etc/hosts
 echo "20.20.50.3 k8s-worker-01" >> /etc/hosts
 echo "20.20.50.4 k8s-worker-02" >> /etc/hosts
 echo "20.20.50.5 k8s-worker-03" >> /etc/hosts
-
-# set korean
-gsettings set org.gnome.desktop.input-sources sources "[('ibus', 'hangul')]"
