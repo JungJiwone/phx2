@@ -1,0 +1,34 @@
+# https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_guest_instant_clone_module.html#ansible-collections-community-vmware-vmware-guest-instant-clone-module
+
+---
+- hosts: localhost
+  vars_files: ./vars.yml
+
+  tasks: 
+  - name: Instant Clone a VM with guest_customization
+    community.vmware.vmware_guest_instant_clone:
+      hostname: '{{ my_vcenter_hostname }}'
+      username: '{{ my_vcenter_username }}'
+      password: '{{ my_vcenter_password }}'
+      validate_certs: false
+      datacenter: '{{ my_datacenter_name }}'
+      vm_username: "root"
+      vm_password: "VMware1!"
+      datastore: '{{ my_vcenter_datastore }}'
+      host: '{{ item.host }}'
+      guestinfo_vars:
+        - hostname: '{{ item.hostname }}'
+          ipaddress: "{{ item.addr }}"
+          netmask: 255.255.255.0
+          gateway: 20.20.50.1
+          dns: 20.20.20.2
+          domain: "{{ item.domain }}"
+      name: '{{ item.name }}'
+      parent_vm: "k8s-master"
+      wait_vm_tools: true
+    with_items:
+    - {hostname: "k8s-worker-01",host: "phx-esxi-01.vclass.phoenix", addr: "20.20.50.3",name: "k8s-worker-01",domain: "k8s-worker-01"}
+    - {hostname: "k8s-worker-02",host: "phx-esxi-02.vclass.phoenix", addr: "20.20.50.4",name: "k8s-worker-02",domain: "k8s-worker-02" }
+    - {hostname: "k8s-worker-03",host: "phx-esxi-03.vclass.phoenix", addr: "20.20.50.5",name: "k8s-worker-03",domain: "k8s-worker-03" }
+    register: Instant_cloned_guest_customize
+    delegate_to: localhost
