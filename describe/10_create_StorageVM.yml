@@ -26,25 +26,25 @@
           unit_number: 0
           type: thin
           datastore: '{{ datastore_name }}'
-        - size_gb: 100 #RAID 구성
+        - size_gb: 100
           controller_type: 'paravirtual'
           controller_number: 0
           unit_number: 1
           type: thin
           datastore: '{{ datastore_name }}'
-        - size_gb: 100 #RAID 구성
+        - size_gb: 100
           controller_type: 'paravirtual'
           controller_number: 0
           unit_number: 2
           type: thin
           datastore: '{{ datastore_name }}'
-        - size_gb: 100 #RAID 구성
+        - size_gb: 100
           controller_type: 'paravirtual'
           controller_number: 0
           unit_number: 3
           type: thin
           datastore: '{{ datastore_name }}'
-        - size_gb: 100 #RAID 구성
+        - size_gb: 100
           controller_type: 'paravirtual'
           controller_number: 0
           unit_number: 4
